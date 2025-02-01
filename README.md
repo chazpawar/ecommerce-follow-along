@@ -44,3 +44,19 @@ In this milestone, we:
 - Configured Tailwind CSS for styling.
 - Built a Login Page using React and Tailwind.
 - Created a basic Express server for the backend.
+
+
+## Milestone 3: Backend Setup and Database Connection
+
+In this milestone, we:
+- Organized the backend folder structure for scalability.
+- Set up a Node.js server using Express.
+- Connected the application to MongoDB for data storage.
+- Implemented API routes for user signup and login.
+- Added basic error handling for better debugging.
+
+### Key Features:
+- **Backend Structure**: Organized into `routes`, `controllers`, `models`, and `middleware`.
+- **Database**: Integrated MongoDB for storing user data.
+- **Error Handling**: Added middleware to handle server errors gracefully.
+
