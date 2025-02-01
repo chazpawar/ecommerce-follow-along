@@ -1,0 +1,46 @@
+## Milestone 1
+
+1. Server Functionality in an E-Commerce Site
+In an e-commerce site, the server is the central body performing vital functions such as browsing products, processing orders, and updating real-time stock information.
+
+The server fetches data when the user browses; for instance, it will retrieve product images, descriptions, and prices from the database and transmit them to the client or the browser. In addition, the server dynamically updates stock levels during events such as sales to avoid discrepancies in stock counts.
+
+Order Processing Workflow:
+
+Stock Verification: Validates the existence of products in the user's shopping cart. Payment Verification: Encryption and processing of payment details with the help of payment gateways. Inventory update: Updates the stock quantity so that overselling is prevented Order Confirmation: Generates receipts and sends a message to the customer Logistics Coordination: Contacts shipping services to print the labels and track orders The server ensures consistency, security, and reliability even in high loads
+
+2. Communication of Mobile Banking Application
+Mobile banking apps depend on secure, real-time client-server communication to provide a seamless user experience.
+
+Connection and Authentication:
+
+• App connects to the server using HTTPS with TLS-encrypt communication. • The server issues a session token for subsequent requests after a successful login. Secure Operations:
+
+For example, to check your account balance: The app transmits the request with a session token. The server verifies the token, fetches data from its own database, encrypts the reply, and then sends it. The app decrypts the reply and shows the balance Optimizations : To gain fast speed, the app might have cached earlier data while downloading newer updates in the background. The user is therefore assured of having a safe experience even in such complex operations
+
+3. Integration with Food Delivery App
+Food delivery applications integrate several systems through APIs for a seamless user experience.
+
+Order Workflow
+
+Menu API: retrieves the latest restaurant menu and checks the availability of items Payment API: ensures safe payment using credit cards, wallets, or UPI Delivery API: tracks the couriers, optimizes routes, and shares real-time information with the application regarding the delivery status, for instance, "Out for Delivery.". Communication Standards: APIs employ standardized forms like JSON or XML for streamlined communication between systems. This guarantees that even with an extremely complex application, service is never interrupted to users.
+
+4. HTTPS and Payment Security
+HTTPS assures secure communication in transactions related to payment. Sensitive information on a user would never be hacked through HTTPS due to the protection by: Encryption of Communication: The use of TLS to encrypt data in transmission, which would make it illegible to hackers. Authentication of the Server: SSL/TLS certificates validate the identity of the server. Ensure data integrity: Prevent data tampering at the time of transmission. When a credit card number is filled, the lock icon in the browser appears indicating the connection is safe. This decreases the chance of interception or theft of data.
+
+5. CRUD Operations
+CRUD operations are the core application for data management.
+
+Examples:
+
+Create: creating an account or adding a product to the cart Read: catalog of products or order history. Update: change delivery address or account information. Delete: remove an item from the cart or cancel an order. Implementation: In SQL databases: CREATE corresponds to INSERT. READ corresponds to SELECT. UPDATE corresponds to UPDATE. DELETE corresponds to DELETE. In NoSQL databases, there are corresponding methods that do the same thing. Access permissions guarantee secure CRUD operations based on user roles.
+
+
+## Milestone 2: Project Setup and Login Page
+
+In this milestone, we:
+- Structured the project into `frontend` and `backend` folders.
+- Set up a React app for the frontend.
+- Configured Tailwind CSS for styling.
+- Built a Login Page using React and Tailwind.
+- Created a basic Express server for the backend.
