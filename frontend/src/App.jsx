@@ -1,11 +1,17 @@
-import Login from './components/Login';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./Login";
+import SignUp from "./SignUp";  // Ensure this path is correct
 
-function App() {
+const App = () => {
   return (
-    <div>
-      <Login />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
