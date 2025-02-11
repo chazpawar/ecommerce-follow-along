@@ -84,3 +84,17 @@ In this milestone, I created the Sign-Up page on the frontend using React and Ta
 - Error messages to guide users when inputs are invalid.
 
 The next step will be connecting the Sign-Up form to the backend API for user registration.
+
+
+## Milestone 6: Backend Signup Endpoint 🚀
+In this milestone, we created the backend logic to handle user registration securely.
+
+Key Features Implemented
+User Registration Endpoint: POST /api/users/signup
+Password Encryption: Used bcryptjs to hash user passwords before saving them to the database.
+User Data Storage: Saved user information (name, email, password, and profile picture) in MongoDB.
+Technologies Used
+Node.js with Express.js for the backend.
+Mongoose for MongoDB interaction.
+bcryptjs for password hashing.
+Multer for handling file uploads.
