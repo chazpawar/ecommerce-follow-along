@@ -60,3 +60,18 @@ In this milestone, we:
 - **Database**: Integrated MongoDB for storing user data.
 - **Error Handling**: Added middleware to handle server errors gracefully.
 
+
+
+## Milestone 4: User Model, Controller, and File Uploads
+
+In this milestone, we:
+- Created a **User Model** to define the structure of user data in the database.
+- Built a **User Controller** to handle user registration and fetching user details.
+- Configured **Multer** to enable file uploads (e.g., profile pictures).
+- Updated the backend to store and retrieve user data with profile pictures.
+
+### Key Features:
+- **User Model**: Defines user schema with fields for `name`, `email`, `password`, and `profilePicture`.
+- **User Controller**: Handles user registration and fetching user details.
+- **Multer**: Enables file uploads and stores files in the `uploads` folder.
+
