@@ -75,3 +75,12 @@ In this milestone, we:
 - **User Controller**: Handles user registration and fetching user details.
 - **Multer**: Enables file uploads and stores files in the `uploads` folder.
 
+
+## Milestone 5: Sign-Up Page
+
+In this milestone, I created the Sign-Up page on the frontend using React and Tailwind CSS. Key features include:
+- A clean and responsive UI for user registration.
+- Form validation for ensuring valid email format and a minimum password length of 6 characters.
+- Error messages to guide users when inputs are invalid.
+
+The next step will be connecting the Sign-Up form to the backend API for user registration.
