@@ -98,3 +98,20 @@ Node.js with Express.js for the backend.
 Mongoose for MongoDB interaction.
 bcryptjs for password hashing.
 Multer for handling file uploads.
+
+## Milestone 7: User Login Functionality
+
+### Features Implemented:
+- Created a backend endpoint for user login.
+- Validated user credentials and compared the encrypted password using `bcrypt`.
+- Returned appropriate responses for successful login and failed attempts.
+
+### Login Endpoint:
+**POST /api/users/login**
+
+#### Request Body:
+```json
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
