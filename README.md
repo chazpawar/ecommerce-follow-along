@@ -115,3 +115,25 @@ Multer for handling file uploads.
   "email": "user@example.com",
   "password": "password123"
 }
+
+
+## Milestone 8: Product Card and Homepage Layout
+
+### Features Implemented:
+- Created a reusable `ProductCard` component that accepts props for product details.
+- Displayed multiple product cards on the homepage using a grid layout.
+- Styled the components using Tailwind CSS for a modern, responsive design.
+
+### Technologies Used:
+- React
+- Tailwind CSS
+
+
+### Milestone 9: Product Form Creation 📦
+Overview 🌟
+Created a Product Form for adding product details and uploading multiple images. This form will save product data to the database and display it on the product listing page.
+
+Features 🛠️
+Form Fields: Product Name, Description, Price, Category, and Image Upload (supports multiple images with preview).
+Interactive UI: Responsive with 3D hover effects and toast notifications.
+Routing: Accessible at /create-product.

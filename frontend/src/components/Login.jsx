@@ -1,64 +1,56 @@
-import React, { useEffect, useRef } from 'react';
+// components/Login.jsx
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
-  const cardRef = useRef(null);
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      const card = cardRef.current;
-      const rect = card.getBoundingClientRect();
-      const offsetX = e.clientX - rect.left - rect.width / 2;
-      const offsetY = e.clientY - rect.top - rect.height / 2;
-
-      card.style.transform = `perspective(1000px) rotateX(${offsetY / 20}deg) rotateY(${offsetX / 20}deg)`;
-    };
-
-    const card = cardRef.current;
-    card.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      card.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 via-black to-white">
-      <div
-        ref={cardRef}
-        className="bg-white p-8 rounded-lg shadow-2xl w-96 transform transition-transform duration-300 ease-out hover:shadow-3xl"
-      >
-        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Login</h2>
-        <form>
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-2 text-gray-700" htmlFor="email">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="Enter your email"
-            />
-          </div>
-          <div className="mb-6">
-            <label className="block text-sm font-medium mb-2 text-gray-700" htmlFor="password">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="Enter your password"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-          >
-            Login
+    <div className="min-h-screen flex">
+      <div className="w-1/2 p-12">
+        <div className="max-w-md mx-auto">
+          <h1 className="text-3xl font-bold mb-2">Welcome back</h1>
+          <p className="text-gray-600 mb-8">Please enter your details</p>
+          
+          <button className="w-full mb-4 flex items-center justify-center border rounded-lg py-3 px-4 space-x-2">
+            <img src="/google-icon.png" alt="" className="w-5 h-5" />
+            <span>Sign in with Google</span>
           </button>
-        </form>
+          
+          <div className="flex items-center my-8">
+            <div className="flex-1 border-t"></div>
+            <span className="px-4 text-gray-500">or</span>
+            <div className="flex-1 border-t"></div>
+          </div>
+          
+          <form>
+            <div className="mb-4">
+              <label className="block text-sm mb-2">Email address</label>
+              <input type="email" className="w-full p-3 border rounded-lg" />
+            </div>
+            
+            <div className="mb-6">
+              <label className="block text-sm mb-2">Password</label>
+              <input type="password" className="w-full p-3 border rounded-lg" />
+            </div>
+            
+            <div className="flex items-center justify-between mb-6">
+              <label className="flex items-center">
+                <input type="checkbox" className="mr-2" />
+                Remember for 30 days
+              </label>
+              <Link to="/forgot-password" className="text-blue-600">Forgot password</Link>
+            </div>
+            
+            <button className="w-full bg-black text-white py-3 rounded-lg mb-4">
+              Sign in
+            </button>
+            
+            <p className="text-center text-gray-600">
+              Don't have an account? <Link to="/signup" className="text-blue-600">Sign up</Link>
+            </p>
+          </form>
+        </div>
       </div>
+      <div className="w-1/2 bg-gray-100"></div>
     </div>
   );
 };
