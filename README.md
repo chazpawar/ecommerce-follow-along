@@ -152,3 +152,13 @@ POST Endpoint:
 
 Receives product data from the frontend
 Validates and saves the data to MongoDB
+
+
+E-Commerce Project — Milestone 11
+Objective: Enhance product cards and implement filtering, sorting, and search features for product listings.
+
+Features
+Product Filtering: By category and price range
+Sorting: Price (Low to High, High to Low) & Name (A-Z, Z-A)
+ProductCard Enhancements: 3D hover effects, "Add to Cart" functionality, and dynamic product details
+Search Bar: Quickly find products by name

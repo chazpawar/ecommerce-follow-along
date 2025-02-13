@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 const ProductForm = () => {
   const [productName, setProductName] = useState("");
@@ -7,39 +7,10 @@ const ProductForm = () => {
   const [category, setCategory] = useState("");
   const [images, setImages] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
-  const [showForm, setShowForm] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
-  const formRef = useRef(null);
-
-  useEffect(() => {
-    if (showForm && formRef.current) {
-      const handleMouseMove = (e) => {
-        const form = formRef.current;
-        const rect = form.getBoundingClientRect();
-        const offsetX = e.clientX - rect.left - rect.width / 2;
-        const offsetY = e.clientY - rect.top - rect.height / 2;
-
-        form.style.transform = `perspective(1000px) rotateX(${offsetY / 50}deg) rotateY(${offsetX / 50}deg)`;
-      };
-
-      const handleMouseLeave = () => {
-        formRef.current.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg)";
-      };
-
-      const form = formRef.current;
-      form.addEventListener("mousemove", handleMouseMove);
-      form.addEventListener("mouseleave", handleMouseLeave);
-
-      return () => {
-        form.removeEventListener("mousemove", handleMouseMove);
-        form.removeEventListener("mouseleave", handleMouseLeave);
-      };
-    }
-  }, [showForm]);
 
   useEffect(() => {
     return () => {
-      // Revoke object URLs to avoid memory leaks
       previewImages.forEach((url) => URL.revokeObjectURL(url));
     };
   }, [previewImages]);
@@ -69,7 +40,6 @@ const ProductForm = () => {
 
     setTimeout(() => {
       setToastMessage("Product created successfully!");
-      setShowForm(false);
       resetForm();
     }, 1000);
   };
@@ -91,120 +61,127 @@ const ProductForm = () => {
   }, [toastMessage]);
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 p-8">
-      {showForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 p-4">
-          <div
-            ref={formRef}
-            className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-2xl sm:max-w-full transform transition-all duration-300 ease-out"
-          >
-            <h2 className="text-3xl font-bold mb-6 text-gray-800">Create Product</h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium mb-2 text-gray-700">
-                  Product Name
-                </label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                  value={productName}
-                  onChange={(e) => setProductName(e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2 text-gray-700">
-                  Description
-                </label>
-                <textarea
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 h-32"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2 text-gray-700">
-                  Price
-                </label>
-                <input
-                  type="number"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2 text-gray-700">
-                  Category
-                </label>
-                <select
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  required
-                >
-                  <option value="">Select a category</option>
-                  <option value="Electronics">Electronics</option>
-                  <option value="Clothing">Clothing</option>
-                  <option value="Accessories">Accessories</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2 text-gray-700">
-                  Upload Product Images
-                </label>
-                <input
-                  type="file"
-                  multiple
-                  onChange={handleImageChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                />
-                {previewImages.length > 0 && (
-                  <div className="mt-4 grid grid-cols-2 gap-4">
-                    {previewImages.map((image, index) => (
-                      <img
-                        key={index}
-                        src={image}
-                        alt={`Preview ${index + 1}`}
-                        className="h-32 w-full object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
-              <div className="flex space-x-4">
-                <button
-                  type="submit"
-                  className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                >
-                  Submit
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowForm(false)}
-                  className="flex-1 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
+    <div className="min-h-screen flex bg-gray-50">
+      <div className="w-full md:w-1/2 p-8 md:p-12 flex items-center justify-center">
+        <div className="w-full max-w-md space-y-8">
+          {/* Header */}
+          <div className="text-center">
+            <h1 className="text-3xl font-bold tracking-tight mb-2">Create Product</h1>
+            <p className="text-gray-600">Enter your product details below</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Product Name
+              </label>
+              <input
+                type="text"
+                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                value={productName}
+                onChange={(e) => setProductName(e.target.value)}
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Description
+              </label>
+              <textarea
+                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 h-32"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Price
+              </label>
+              <input
+                type="number"
+                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Category
+              </label>
+              <select
+                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                required
+              >
+                <option value="">Select a category</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Clothing">Clothing</option>
+                <option value="Accessories">Accessories</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Upload Product Images
+              </label>
+              <input
+                type="file"
+                multiple
+                onChange={handleImageChange}
+                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+              />
+              {previewImages.length > 0 && (
+                <div className="mt-4 grid grid-cols-2 gap-4">
+                  {previewImages.map((image, index) => (
+                    <img
+                      key={index}
+                      src={image}
+                      alt={`Preview ${index + 1}`}
+                      className="h-32 w-full object-cover rounded-lg shadow-md"
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200"
+            >
+              Create Product
+            </button>
+          </form>
+        </div>
+      </div>
+
+      {/* Right side image section */}
+      <div className="hidden md:block md:w-1/2">
+        <div className="h-full w-full bg-cover bg-center relative">
+          <img 
+            src="https://www.home-designing.com/wp-content/uploads/2016/02/minimalistic-decor-ideas.jpg"
+            alt="Product Showcase"
+            className="w-full h-full object-cover absolute inset-0"
+          />
+          <div className="h-full w-full bg-black bg-opacity-50 flex items-center justify-center p-12 relative z-10">
+            <div className="text-white text-center">
+              <h2 className="text-4xl font-bold mb-4">Create Amazing Products</h2>
+              <p className="text-lg text-gray-200">
+                Share your products with the world
+              </p>
+            </div>
           </div>
         </div>
-      )}
-
-      {/* Floating Button */}
-      <button
-        onClick={() => setShowForm(true)}
-        className="fixed bottom-8 right-8 bg-blue-600 text-white p-4 rounded-full shadow-2xl hover:bg-blue-700 transition-all duration-300 hover:shadow-3xl transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 z-50"
-      >
-        + Create Product
-      </button>
+      </div>
 
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white py-3 px-6 rounded-lg shadow-2xl z-50 transition-opacity duration-300">
+        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-black text-white py-3 px-6 rounded-lg shadow-xl z-50 transition-opacity duration-200">
           {toastMessage}
         </div>
       )}

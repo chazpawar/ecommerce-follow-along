@@ -35,11 +35,21 @@ router.post('/create', upload.array('images', 5), async (req, res) => {
     });
 
     await newProduct.save();
-
     res.status(201).json({ message: 'Product created successfully', product: newProduct });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// GET endpoint to fetch all products
+router.get('/', async (req, res) => {
+  try {
+    const products = await Product.find();
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to fetch products' });
   }
 });
 

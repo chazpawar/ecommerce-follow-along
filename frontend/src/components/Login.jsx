@@ -1,27 +1,61 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, AlertCircle } from 'lucide-react';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Here you would typically:
-    // 1. Validate the form
-    // 2. Make an API call to authenticate
-    // 3. Store the token/user data
+  const validateForm = () => {
+    const newErrors = {};
     
-    // For now, we'll just redirect to home
-    navigate('/');
+    if (!email) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+    
+    if (!password) {
+      newErrors.password = 'Password is required';
+    } else if (password.length < 8) {
+      newErrors.password = 'Password must be at least 8 characters';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!validateForm()) return;
+    
+    setIsLoading(true);
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      if (rememberMe) {
+        localStorage.setItem('rememberedEmail', email);
+      } else {
+        localStorage.removeItem('rememberedEmail');
+      }
+      
+      navigate('/');
+    } catch (error) {
+      setErrors({ submit: 'Failed to sign in. Please check your credentials.' });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen flex">
-      {/* Login Form Section */}
       <div className="w-full md:w-1/2 p-8 md:p-12 flex items-center justify-center">
         <div className="w-full max-w-md space-y-8">
           {/* Logo */}
@@ -38,23 +72,13 @@ const Login = () => {
             <p className="text-gray-600">Please enter your details to sign in</p>
           </div>
 
-          {/* Social Login */}
-          <button className="w-full flex items-center justify-center space-x-2 border border-gray-300 rounded-lg py-3 px-4 hover:bg-gray-50 transition-colors duration-200">
-            <img src="/api/placeholder/20/20" alt="Google" className="w-5 h-5" />
-            <span className="text-gray-700">Continue with Google</span>
-          </button>
-
-          {/* Divider */}
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
+          {errors.submit && (
+            <div className="bg-red-50 border border-red-200 text-red-800 rounded-lg p-4 flex items-center space-x-2">
+              <AlertCircle className="h-5 w-5 text-red-600" />
+              <span>{errors.submit}</span>
             </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white text-gray-500">or continue with</span>
-            </div>
-          </div>
+          )}
 
-          {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -67,12 +91,24 @@ const Login = () => {
                 <input
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (errors.email) {
+                      setErrors({ ...errors, email: '' });
+                    }
+                  }}
+                  className={`block w-full pl-10 pr-3 py-3 border rounded-lg transition-all duration-200
+                    ${errors.email 
+                      ? 'border-red-500 focus:ring-red-500 focus:border-red-500' 
+                      : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+                    }`}
                   placeholder="Enter your email"
                   required
                 />
               </div>
+              {errors.email && (
+                <p className="mt-2 text-sm text-red-600">{errors.email}</p>
+              )}
             </div>
 
             <div>
@@ -86,8 +122,17 @@ const Login = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (errors.password) {
+                      setErrors({ ...errors, password: '' });
+                    }
+                  }}
+                  className={`block w-full pl-10 pr-10 py-3 border rounded-lg transition-all duration-200
+                    ${errors.password 
+                      ? 'border-red-500 focus:ring-red-500 focus:border-red-500' 
+                      : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+                    }`}
                   placeholder="Enter your password"
                   required
                 />
@@ -103,12 +148,17 @@ const Login = () => {
                   )}
                 </button>
               </div>
+              {errors.password && (
+                <p className="mt-2 text-sm text-red-600">{errors.password}</p>
+              )}
             </div>
 
             <div className="flex items-center justify-between">
               <label className="flex items-center">
                 <input
                   type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
                 <span className="ml-2 text-sm text-gray-600">Remember me</span>
@@ -123,13 +173,17 @@ const Login = () => {
 
             <button
               type="submit"
-              className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200 flex items-center justify-center space-x-2"
+              disabled={isLoading}
+              className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <span>Sign in</span>
+              {isLoading ? (
+                <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              ) : (
+                <span>Sign in</span>
+              )}
             </button>
           </form>
 
-          {/* Sign Up Link */}
           <p className="text-center text-gray-600">
             Don't have an account?{' '}
             <Link
@@ -143,19 +197,19 @@ const Login = () => {
       </div>
 
       <div className="hidden md:block md:w-1/2">
-  <div className="h-full w-full bg-cover bg-center relative">
-    <img 
-      src="https://www.home-designing.com/wp-content/uploads/2016/02/black-and-white-luxurious-kitchen.jpg"
-      alt="Luxury Kitchen"
-      className="w-full h-full object-cover absolute inset-0"
-    />
-     <div className="h-full w-full bg-black bg-opacity-50 flex items-center justify-center p-12 relative z-10">
-      <div className="text-white text-center">
-        <h2 className="text-4xl font-bold mb-4">Welcome to Our Platform</h2>
-        <p className="text-lg text-gray-200">
-          Discover amazing products and services tailored just for you
-        </p>
-      </div>
+        <div className="h-full w-full bg-cover bg-center relative">
+          <img 
+            src="https://www.home-designing.com/wp-content/uploads/2016/02/black-and-white-luxurious-kitchen.jpg"
+            alt="Luxury Kitchen"
+            className="w-full h-full object-cover absolute inset-0"
+          />
+          <div className="h-full w-full bg-black bg-opacity-50 flex items-center justify-center p-12 relative z-10">
+            <div className="text-white text-center">
+              <h2 className="text-4xl font-bold mb-4">Welcome to Our Platform</h2>
+              <p className="text-lg text-gray-200">
+                Discover amazing products and services tailored just for you
+              </p>
+            </div>
           </div>
         </div>
       </div>

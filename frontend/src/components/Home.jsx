@@ -1,33 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
-  const popularProducts = [
-    {
-      id: 1,
-      name: 'Flower Vase',
-      price: 29.99,
-      image: 'https://image.hm.com/assets/hm/0b/fc/0bfc00ddd054221ae07879781fefac599e3ecd8c.jpg?imwidth=1536'
-    },
-    {
-      id: 2,
-      name: 'Extra-large stoneware vase',
-      price:  1899,
-      image: 'https://image.hm.com/assets/hm/ed/a1/eda1aa8aff6a64d5bfe1e3fce2e013ab1629fa34.jpg?imwidth=1536'
-    },
-    {
-      id: 3,
-      name: 'Large irregular stoneware vase',
-      price: 2699.00,
-      image: 'https://image.hm.com/assets/hm/15/41/1541b49319ab2e4baec3e3776b2434d685928457.jpg?imwidth=1536'
-    },
-    {
-      id: 4,
-      name: 'Wooden frame',
-      price: 1499.00,
-      image: 'https://image.hm.com/assets/hm/72/76/727686df3964c65408746075c6a7f06450149d08.jpg?imwidth=1536'
-    }
-  ];
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:7000/api/products');
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">
@@ -41,7 +30,7 @@ const Home = () => {
               <Link to="/cart" className="text-gray-600">Cart</Link>
               <Link to="/contact" className="text-gray-600">Contact</Link>
             </div>
-            
+
             <div className="flex-1 flex justify-center">
               <Link to="/" className="text-3xl">
                 <svg viewBox="0 0 24 24" className="w-8 h-8" fill="none" stroke="currentColor">
@@ -85,14 +74,16 @@ const Home = () => {
         </div>
       </section>
 
-      {/* What We Do Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-6 text-center max-w-4xl">
-          <h2 className="text-4xl font-serif mb-8">What We Do</h2>
-          <p className="text-gray-600 leading-relaxed mb-8">
-            Our Focus: Crafting Inspiring Living Spaces. At Furniture home, we're dedicated to turning ordinary spaces into visual masterpieces. With a passion for design, we collaborate closely with you to bring your unique vision to life. From color palettes to furniture arrangement, our decor experts ensure each corner tells a captivating story.
+      {/* What We Do */}
+      <section className="py-20 bg-gray-100">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-4xl font-serif mb-6">What We Do</h2>
+          <p className="text-lg mb-8">
+            Our Focus: Crafting Inspiring Living Spaces. At Furniture Home, we're dedicated to turning ordinary spaces into visual masterpieces. With a passion for design, we collaborate closely with you to bring your unique vision to life. From color palettes to furniture arrangement, our decor experts ensure each corner tells a captivating story.
           </p>
-          <button className="bg-black text-white px-6 py-3 rounded">Learn More</button>
+          <button className="bg-black text-white px-8 py-4 rounded hover:bg-gray-800 transition-colors">
+            Learn More
+          </button>
         </div>
       </section>
 
@@ -101,13 +92,17 @@ const Home = () => {
         <div className="container mx-auto px-6">
           <h2 className="text-4xl font-serif text-center mb-12">Popular Collection</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {popularProducts.map((product) => (
-              <div key={product.id} className="bg-white p-4">
-                <img src={product.image} alt={product.name} className="w-full h-64 object-cover mb-4" />
-                <h3 className="font-medium">{product.name}</h3>
-                <p className="text-gray-600">${product.price}</p>
-              </div>
-            ))}
+            {products.length > 0 ? (
+              products.map((product) => (
+                <div key={product._id} className="bg-white p-4">
+                  <img src={product.images[0]} alt={product.name} className="w-full h-64 object-cover mb-4" />
+                  <h3 className="font-medium">{product.name}</h3>
+                  <p className="text-gray-600">${product.price}</p>
+                </div>
+              ))
+            ) : (
+              <p className="text-center col-span-4 text-gray-600">No products available</p>
+            )}
           </div>
         </div>
       </section>
@@ -144,7 +139,7 @@ const Home = () => {
             </div>
             <div>
               <h3 className="font-medium mb-4">Subscribe to our newsletter</h3>
-              <p className="text-gray-600 mb-4">Join our community to get weekly updates and unique gifts every friday</p>
+              <p className="text-gray-600 mb-4">Join our community to get weekly updates and unique gifts every Friday</p>
               <div className="flex">
                 <input
                   type="email"

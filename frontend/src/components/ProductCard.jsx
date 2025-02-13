@@ -7,15 +7,17 @@ const ProductCard = ({ product }) => {
   useEffect(() => {
     const handleMouseMove = (e) => {
       const card = cardRef.current;
+      if (!card) return;
       const rect = card.getBoundingClientRect();
       const offsetX = e.clientX - rect.left - rect.width / 2;
       const offsetY = e.clientY - rect.top - rect.height / 2;
-
-      card.style.transform = `perspective(1000px) rotateX(${offsetY / 20}deg) rotateY(${offsetX / 20}deg)`;
+      card.style.transform = `perspective(1500px) rotateX(${offsetY / 25}deg) rotateY(${offsetX / 25}deg)`;
     };
 
     const handleMouseLeave = () => {
-      cardRef.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+      if (cardRef.current) {
+        cardRef.current.style.transform = 'perspective(1500px) rotateX(0deg) rotateY(0deg)';
+      }
     };
 
     const card = cardRef.current;
@@ -28,39 +30,41 @@ const ProductCard = ({ product }) => {
     };
   }, []);
 
-  const handleAddToCart = () => {
-    alert(`${product.name} added to cart! 🛒`);
-  };
-
   return (
-    <div
+    <Link
+      to={`/product/${product.id}`}
       ref={cardRef}
-      className="bg-white rounded-lg shadow-2xl overflow-hidden transform transition-transform duration-300 hover:shadow-3xl"
+      className="block bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:shadow-xl"
     >
-      <img
-        src={product.image}
-        alt={product.name}
-        className="h-48 w-full object-cover transition-transform duration-300 hover:scale-105"
-      />
-      <div className="p-6">
-        <h3 className="text-xl font-semibold text-gray-800 mb-2">{product.name}</h3>
-        <p className="text-gray-600 text-lg font-medium mb-4">${product.price.toFixed(2)}</p>
-        <div className="flex justify-between items-center space-x-4">
-          <button
-            onClick={handleAddToCart}
-            className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-          >
-            Add to Cart
-          </button>
-          <Link
-            to={`/product/${product.id}`}
-            className="text-blue-600 hover:text-blue-800 font-medium transition-colors duration-300"
-          >
-            Details
-          </Link>
+      <div className="relative">
+        <img
+          src={product.images ? product.images[0] : '/api/placeholder/400/300'}
+          alt={product.name || 'Product'}
+          className="h-48 w-full object-cover transition-transform duration-300 hover:scale-105"
+          loading="lazy"
+        />
+        {product.rating && (
+          <div className="absolute top-2 right-2 bg-white px-2 py-1 rounded-full text-sm font-medium text-yellow-500">
+            ⭐ {product.rating}
+          </div>
+        )}
+      </div>
+      
+      <div className="p-6 space-y-4">
+        <div>
+          <h3 className="text-xl font-semibold text-gray-800">
+            {product.name || 'Unnamed Product'}
+          </h3>
+          <p className="text-gray-600 font-medium mt-1">
+            ${product.price ? product.price.toFixed(2) : '0.00'}
+          </p>
+        </div>
+        
+        <div className="w-full bg-black text-white py-2 px-4 rounded-lg transition-colors duration-200 hover:bg-gray-800 text-center">
+          View Details
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
