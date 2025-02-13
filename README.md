@@ -137,3 +137,18 @@ Features 🛠️
 Form Fields: Product Name, Description, Price, Category, and Image Upload (supports multiple images with preview).
 Interactive UI: Responsive with 3D hover effects and toast notifications.
 Routing: Accessible at /create-product.
+
+
+## Milestone 10: Product Schema and Endpoint Creation 🚀
+Overview
+In this milestone, we created a Mongoose schema for products and built a POST endpoint to validate and store product details in MongoDB. This ensures data integrity and lays the foundation for managing products in the database.
+
+Key Features
+Mongoose Product Schema:
+
+Defines product data structure (name, description, price, images, etc.)
+Includes validation for required fields and correct data types
+POST Endpoint:
+
+Receives product data from the frontend
+Validates and saves the data to MongoDB
