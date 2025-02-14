@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import ProductCard from './ProductCard';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -94,11 +95,7 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {products.length > 0 ? (
               products.map((product) => (
-                <div key={product._id} className="bg-white p-4">
-                  <img src={product.images[0]} alt={product.name} className="w-full h-64 object-cover mb-4" />
-                  <h3 className="font-medium">{product.name}</h3>
-                  <p className="text-gray-600">${product.price}</p>
-                </div>
+                <ProductCard key={product._id} product={product} />
               ))
             ) : (
               <p className="text-center col-span-4 text-gray-600">No products available</p>

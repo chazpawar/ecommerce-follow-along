@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from 'axios';
 
 const ProductForm = () => {
   const [productName, setProductName] = useState("");
@@ -34,14 +35,54 @@ const ProductForm = () => {
     return true;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    setTimeout(() => {
+    try {
+      const formData = new FormData();
+      formData.append('name', productName);
+      formData.append('description', description);
+      formData.append('price', price);
+      formData.append('category', category);
+      formData.append('userEmail', localStorage.getItem('userEmail'));
+
+      // Append each image to formData
+      images.forEach((image) => {
+        formData.append('images', image);
+      });
+
+      const response = await axios.post('http://localhost:7000/api/products/create',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          withCredentials: true,
+          maxBodyLength: Infinity,
+          maxContentLength: Infinity
+        }
+      );
+
+      if (!response.data) {
+        throw new Error('Failed to create product');
+      }
+
       setToastMessage("Product created successfully!");
       resetForm();
-    }, 1000);
+      
+      // Add a delay before navigation to show the success message
+      setTimeout(() => {
+        window.location.href = '/my-products';
+      }, 2000);
+    } catch (error) {
+      console.error('Error creating product:', error);
+      setToastMessage(
+        error.response?.data?.message ||
+        error.message ||
+        'Failed to create product. Please try again.'
+      );
+    }
   };
 
   const resetForm = () => {

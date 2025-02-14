@@ -162,3 +162,13 @@ Product Filtering: By category and price range
 Sorting: Price (Low to High, High to Low) & Name (A-Z, Z-A)
 ProductCard Enhancements: 3D hover effects, "Add to Cart" functionality, and dynamic product details
 Search Bar: Quickly find products by name
+
+
+
+Milestone 12: My Products Page
+In this milestone, we implemented the My Products page, which displays all the products uploaded by the currently logged-in user. This involves setting up a new route and creating a React component that fetches and displays the user's products.
+
+Milestone Goals
+Create a My Products page.
+Set up a backend route to fetch products based on the logged-in user's email.
+Fetch and display the user’s products in a responsive grid layout.

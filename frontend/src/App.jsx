@@ -5,14 +5,15 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import NotFound from './components/NotFound';
+import MyProducts from './pages/MyProducts'; // Import the MyProducts component
 
 const App = () => {
   return (
     <Router>
       <div className="min-h-screen bg-gray-100">
-        {/* Simple Navigation */}
-        <nav className="bg-blue-600 p-4 text-white">
-          <ul className="flex space-x-4">
+        {/* Navigation */}
+        <nav className="bg-gray-600 p-4 text-white">
+          <ul className="flex space-x-20">
             <li>
               <Link to="/" className="hover:underline">Home</Link>
             </li>
@@ -25,6 +26,9 @@ const App = () => {
             <li>
               <Link to="/create-product" className="hover:underline">Create Product</Link>
             </li>
+            <li>
+              <Link to="/my-products" className="hover:underline">My Products</Link>
+            </li>
           </ul>
         </nav>
 
@@ -34,6 +38,7 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/create-product" element={<ProductForm />} />
+            <Route path="/my-products" element={<MyProducts />} /> {/* My Products route */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

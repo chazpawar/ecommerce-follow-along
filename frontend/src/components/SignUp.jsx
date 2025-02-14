@@ -72,7 +72,7 @@ const SignUp = () => {
 
           {/* Social Signup */}
           <button className="w-full flex items-center justify-center space-x-2 border border-gray-300 rounded-lg py-3 px-4 hover:bg-gray-50 transition-colors duration-200">
-            <img src="/api/placeholder/20/20" alt="Google" className="w-5 h-5" />
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5" />
             <span className="text-gray-700">Continue with Google</span>
           </button>
 
