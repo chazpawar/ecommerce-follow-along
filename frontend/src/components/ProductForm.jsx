@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const ProductForm = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -9,7 +12,42 @@ const ProductForm = () => {
   const [images, setImages] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
   const [toastMessage, setToastMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
+  // Handle toast messages
+  useEffect(() => {
+    if (toastMessage) {
+      const timer = setTimeout(() => setToastMessage(""), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [toastMessage]);
+
+  // Fetch product data if in edit mode
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (id) {
+        try {
+          setIsLoading(true);
+          const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/${id}`);
+          const productData = response.data;
+          setProduct(productData);
+          setProductName(productData.name);
+          setDescription(productData.description);
+          setPrice(productData.price);
+          setCategory(productData.category);
+        } catch (error) {
+          console.error('Error fetching product:', error);
+          setToastMessage('Failed to fetch product details');
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  // Cleanup preview URLs
   useEffect(() => {
     return () => {
       previewImages.forEach((url) => URL.revokeObjectURL(url));
@@ -28,7 +66,8 @@ const ProductForm = () => {
       setToastMessage("Please fill in all fields.");
       return false;
     }
-    if (images.length === 0) {
+    // Only require images for new products
+    if (!product && images.length === 0) {
       setToastMessage("Please upload at least one image.");
       return false;
     }
@@ -40,36 +79,61 @@ const ProductForm = () => {
     if (!validateForm()) return;
 
     try {
+      setIsLoading(true);
       const formData = new FormData();
       formData.append('name', productName);
       formData.append('description', description);
       formData.append('price', price);
       formData.append('category', category);
-      formData.append('userEmail', localStorage.getItem('userEmail'));
-
-      // Append each image to formData
-      images.forEach((image) => {
-        formData.append('images', image);
-      });
-
-      const response = await axios.post('http://localhost:7000/api/products/create',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-          withCredentials: true,
-          maxBodyLength: Infinity,
-          maxContentLength: Infinity
-        }
-      );
-
-      if (!response.data) {
-        throw new Error('Failed to create product');
+      
+      if (!product) {
+        // Creating new product
+        formData.append('userEmail', localStorage.getItem('userEmail'));
       }
 
-      setToastMessage("Product created successfully!");
-      resetForm();
+      // Append each image to formData only if new images are selected
+      if (images.length > 0) {
+        images.forEach((image) => {
+          formData.append('images', image);
+        });
+      }
+
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        withCredentials: true,
+        maxBodyLength: Infinity,
+        maxContentLength: Infinity
+      };
+
+      let response;
+      if (product) {
+        // Update existing product
+        response = await axios.put(
+          `${import.meta.env.VITE_API_URL}/api/products/update/${product._id}`,
+          formData,
+          config
+        );
+        setToastMessage("Product updated successfully!");
+      } else {
+        // Create new product
+        response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/api/products/create`,
+          formData,
+          config
+        );
+        setToastMessage("Product created successfully!");
+      }
+
+      if (!response.data) {
+        throw new Error(product ? 'Failed to update product' : 'Failed to create product');
+      }
+
+      // Reset form if creating new product
+      if (!product) {
+        resetForm();
+      }
       
       // Add a delay before navigation to show the success message
       setTimeout(() => {
@@ -82,6 +146,8 @@ const ProductForm = () => {
         error.message ||
         'Failed to create product. Please try again.'
       );
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -94,21 +160,18 @@ const ProductForm = () => {
     setPreviewImages([]);
   };
 
-  useEffect(() => {
-    if (toastMessage) {
-      const timer = setTimeout(() => setToastMessage(""), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [toastMessage]);
-
   return (
     <div className="min-h-screen flex bg-gray-50">
       <div className="w-full md:w-1/2 p-8 md:p-12 flex items-center justify-center">
         <div className="w-full max-w-md space-y-8">
           {/* Header */}
           <div className="text-center">
-            <h1 className="text-3xl font-bold tracking-tight mb-2">Create Product</h1>
-            <p className="text-gray-600">Enter your product details below</p>
+            <h1 className="text-3xl font-bold tracking-tight mb-2">
+              {product ? 'Edit Product' : 'Create Product'}
+            </h1>
+            <p className="text-gray-600">
+              {product ? 'Update your product details below' : 'Enter your product details below'}
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -177,25 +240,54 @@ const ProductForm = () => {
                 onChange={handleImageChange}
                 className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
               />
+              {/* Show newly selected images */}
               {previewImages.length > 0 && (
-                <div className="mt-4 grid grid-cols-2 gap-4">
-                  {previewImages.map((image, index) => (
-                    <img
-                      key={index}
-                      src={image}
-                      alt={`Preview ${index + 1}`}
-                      className="h-32 w-full object-cover rounded-lg shadow-md"
-                    />
-                  ))}
+                <div className="mt-4">
+                  <p className="text-sm font-medium text-gray-700 mb-2">New Images:</p>
+                  <div className="grid grid-cols-2 gap-4">
+                    {previewImages.map((image, index) => (
+                      <img
+                        key={index}
+                        src={image}
+                        alt={`Preview ${index + 1}`}
+                        className="h-32 w-full object-cover rounded-lg shadow-md"
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Show existing product images in edit mode */}
+              {product && product.images && product.images.length > 0 && (
+                <div className="mt-4">
+                  <p className="text-sm font-medium text-gray-700 mb-2">Current Images:</p>
+                  <div className="grid grid-cols-2 gap-4">
+                    {product.images.map((image, index) => (
+                      <img
+                        key={`existing-${index}`}
+                        src={`${import.meta.env.VITE_API_URL}${image}`}
+                        alt={`Product ${index + 1}`}
+                        className="h-32 w-full object-cover rounded-lg shadow-md"
+                      />
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
 
             <button
               type="submit"
-              className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200"
+              disabled={isLoading}
+              className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Create Product
+              {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                  {product ? 'Updating...' : 'Creating...'}
+                </div>
+              ) : (
+                product ? 'Update Product' : 'Create Product'
+              )}
             </button>
           </form>
         </div>

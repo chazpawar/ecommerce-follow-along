@@ -19,7 +19,7 @@ const MyProducts = () => {
       }
 
       try {
-        const response = await axios.get(`http://localhost:7000/api/products/my-products/${userEmail}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/my-products/${userEmail}`);
         setProducts(response.data);
       } catch (err) {
         console.error('Error fetching products:', err);

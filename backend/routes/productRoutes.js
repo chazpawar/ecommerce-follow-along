@@ -76,6 +76,20 @@ router.post('/create', upload.array('images', 5), async (req, res) => {
   }
 });
 
+// GET endpoint to fetch a single product by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    res.status(200).json(product);
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    res.status(500).json({ message: 'Failed to fetch product details' });
+  }
+});
+
 // GET endpoint to fetch all products
 router.get('/', async (req, res) => {
   try {
@@ -101,6 +115,100 @@ router.get('/my-products/:email', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// PUT endpoint to update a product
+router.put('/update/:id', upload.array('images', 5), async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const { name, description, price, category } = req.body;
+    
+    if (!name || !description || !price || !category) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    const updateData = {
+      name,
+      description,
+      price,
+      category
+    };
+
+    // If new images are uploaded, update the images array
+    if (req.files && req.files.length > 0) {
+      const imagePaths = req.files.map(file => `/uploads/${file.filename}`);
+      updateData.images = imagePaths;
+
+      // Get the existing product to delete old images
+      const existingProduct = await Product.findById(productId);
+      if (existingProduct && existingProduct.images) {
+        // Delete old image files
+        existingProduct.images.forEach(imagePath => {
+          const fullPath = path.join(__dirname, '..', imagePath);
+          if (fs.existsSync(fullPath)) {
+            fs.unlinkSync(fullPath);
+          }
+        });
+      }
+    }
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+      productId,
+      updateData,
+      { new: true }
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    res.status(200).json({
+      message: 'Product updated successfully',
+      product: updatedProduct
+    });
+  } catch (error) {
+    console.error('Error updating product:', error);
+    res.status(500).json({
+      message: 'Failed to update product',
+      error: error.message
+    });
+  }
+});
+
+// DELETE endpoint to delete a product by ID
+router.delete('/delete/:id', async (req, res) => {
+  try {
+    const productId = req.params.id;
+
+    // Find the product first to get image paths
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    // Ensure the user owns this product
+    if (product.userEmail !== req.body.userEmail) {
+      return res.status(403).json({ message: 'Not authorized to delete this product' });
+    }
+
+    // Delete associated image files
+    if (product.images && product.images.length > 0) {
+      product.images.forEach(imagePath => {
+        const fullPath = path.join(__dirname, '..', imagePath);
+        if (fs.existsSync(fullPath)) {
+          fs.unlinkSync(fullPath);
+        }
+      });
+    }
+
+    // Delete the product from database
+    await Product.findByIdAndDelete(productId);
+
+    res.status(200).json({ message: 'Product deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting product:', error);
+    res.status(500).json({ message: 'Failed to delete product' });
   }
 });
 

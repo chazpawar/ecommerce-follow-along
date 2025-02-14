@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import ProductForm from './components/ProductForm';
-import Home from './components/Home';
-import Login from './components/Login';
-import Signup from './components/Signup';
-import NotFound from './components/NotFound';
-import MyProducts from './pages/MyProducts'; // Import the MyProducts component
+import Home from './pages/Home';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import NotFound from './pages/NotFound';
+import MyProducts from './pages/MyProducts';
 
 const App = () => {
   return (
@@ -36,9 +36,10 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path="/signup" element={<SignUp />} />
             <Route path="/create-product" element={<ProductForm />} />
-            <Route path="/my-products" element={<MyProducts />} /> {/* My Products route */}
+            <Route path="/edit-product/:id" element={<ProductForm />} />
+            <Route path="/my-products" element={<MyProducts />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

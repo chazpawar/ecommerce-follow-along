@@ -35,7 +35,6 @@ Examples:
 
 Create: creating an account or adding a product to the cart Read: catalog of products or order history. Update: change delivery address or account information. Delete: remove an item from the cart or cancel an order. Implementation: In SQL databases: CREATE corresponds to INSERT. READ corresponds to SELECT. UPDATE corresponds to UPDATE. DELETE corresponds to DELETE. In NoSQL databases, there are corresponding methods that do the same thing. Access permissions guarantee secure CRUD operations based on user roles.
 
-
 ## Milestone 2: Project Setup and Login Page
 
 In this milestone, we:
@@ -44,7 +43,6 @@ In this milestone, we:
 - Configured Tailwind CSS for styling.
 - Built a Login Page using React and Tailwind.
 - Created a basic Express server for the backend.
-
 
 ## Milestone 3: Backend Setup and Database Connection
 
@@ -60,8 +58,6 @@ In this milestone, we:
 - **Database**: Integrated MongoDB for storing user data.
 - **Error Handling**: Added middleware to handle server errors gracefully.
 
-
-
 ## Milestone 4: User Model, Controller, and File Uploads
 
 In this milestone, we:
@@ -75,7 +71,6 @@ In this milestone, we:
 - **User Controller**: Handles user registration and fetching user details.
 - **Multer**: Enables file uploads and stores files in the `uploads` folder.
 
-
 ## Milestone 5: Sign-Up Page
 
 In this milestone, I created the Sign-Up page on the frontend using React and Tailwind CSS. Key features include:
@@ -84,7 +79,6 @@ In this milestone, I created the Sign-Up page on the frontend using React and Ta
 - Error messages to guide users when inputs are invalid.
 
 The next step will be connecting the Sign-Up form to the backend API for user registration.
-
 
 ## Milestone 6: Backend Signup Endpoint 🚀
 In this milestone, we created the backend logic to handle user registration securely.
@@ -116,7 +110,6 @@ Multer for handling file uploads.
   "password": "password123"
 }
 
-
 ## Milestone 8: Product Card and Homepage Layout
 
 ### Features Implemented:
@@ -128,7 +121,6 @@ Multer for handling file uploads.
 - React
 - Tailwind CSS
 
-
 ### Milestone 9: Product Form Creation 📦
 Overview 🌟
 Created a Product Form for adding product details and uploading multiple images. This form will save product data to the database and display it on the product listing page.
@@ -137,7 +129,6 @@ Features 🛠️
 Form Fields: Product Name, Description, Price, Category, and Image Upload (supports multiple images with preview).
 Interactive UI: Responsive with 3D hover effects and toast notifications.
 Routing: Accessible at /create-product.
-
 
 ## Milestone 10: Product Schema and Endpoint Creation 🚀
 Overview
@@ -153,7 +144,6 @@ POST Endpoint:
 Receives product data from the frontend
 Validates and saves the data to MongoDB
 
-
 E-Commerce Project — Milestone 11
 Objective: Enhance product cards and implement filtering, sorting, and search features for product listings.
 
@@ -163,12 +153,43 @@ Sorting: Price (Low to High, High to Low) & Name (A-Z, Z-A)
 ProductCard Enhancements: 3D hover effects, "Add to Cart" functionality, and dynamic product details
 Search Bar: Quickly find products by name
 
-
-
 Milestone 12: My Products Page
 In this milestone, we implemented the My Products page, which displays all the products uploaded by the currently logged-in user. This involves setting up a new route and creating a React component that fetches and displays the user's products.
 
 Milestone Goals
 Create a My Products page.
 Set up a backend route to fetch products based on the logged-in user's email.
-Fetch and display the user’s products in a responsive grid layout.
+Fetch and display the user's products in a responsive grid layout.
+
+## Milestone 13: Product Editing Functionality 🔄
+
+In this milestone, we implemented the ability to edit existing products by adding an edit button to product cards and creating a backend endpoint to update data in MongoDB. This enhancement allows users to modify their uploaded products easily.
+
+### Features Implemented:
+- Added an edit button to product cards (visible only to product owners)
+- Created a PUT endpoint (/api/products/update/:id) for updating product data
+- Enhanced ProductForm component to handle both creation and editing modes
+- Implemented auto-filling of form with existing product data
+- Added support for updating or keeping existing product images
+
+### Technical Highlights:
+- Backend route for updating products in MongoDB
+- Frontend form validation with optional image upload for edits
+- Secure editing (only product owners can edit their products)
+- Real-time UI updates after successful edits
+
+## Milestone 14: Product Deletion Functionality 🗑️
+
+In this milestone, we implemented the ability to delete products by adding a delete button to product cards and creating a backend endpoint to remove data from MongoDB.
+
+### Features Implemented:
+- Added a delete button to product cards (visible only to product owners)
+- Created a DELETE endpoint (/api/products/delete/:id) for removing products
+- Added confirmation dialog before deletion
+- Implemented cleanup of associated image files
+
+### Technical Highlights:
+- Backend route for deleting products from MongoDB
+- Secure deletion (only product owners can delete their products)
+- Automatic cleanup of uploaded image files
+- User feedback with loading states and notifications

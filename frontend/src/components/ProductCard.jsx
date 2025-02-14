@@ -1,13 +1,60 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag, Edit, Trash2 } from 'lucide-react';
 
 const ProductCard = ({ product }) => {
   const cardRef = useRef(null);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!window.confirm('Are you sure you want to delete this product?')) {
+      return;
+    }
+
+    try {
+      setIsDeleting(true);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/products/delete/${product._id}`, {
+        data: { userEmail: localStorage.getItem('userEmail') }
+      });
+
+      // Show success message
+      const notification = document.createElement('div');
+      notification.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-transform duration-300 translate-y-0';
+      notification.textContent = 'Product deleted successfully!';
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.transform = 'translateY(100%)';
+        setTimeout(() => {
+          document.body.removeChild(notification);
+          // Reload the page to refresh the product list
+          window.location.reload();
+        }, 300);
+      }, 2000);
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      
+      // Show error message
+      const notification = document.createElement('div');
+      notification.className = 'fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-transform duration-300 translate-y-0';
+      notification.textContent = error.response?.data?.message || 'Failed to delete product';
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.transform = 'translateY(100%)';
+        setTimeout(() => document.body.removeChild(notification), 300);
+      }, 2000);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -131,7 +178,7 @@ const ProductCard = ({ product }) => {
       <Link to={`/product/${product._id}`} className="block">
         <div className="relative overflow-hidden">
           <img
-            src={product.images ? `http://localhost:7000${product.images[0]}` : '/api/placeholder/400/300'}
+            src={product.images ? `${import.meta.env.VITE_API_URL}${product.images[0]}` : '/api/placeholder/400/300'}
             alt={product.name || 'Product'}
             className="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
@@ -172,21 +219,58 @@ const ProductCard = ({ product }) => {
         </div>
       </Link>
 
-      <button
-        onClick={handleAddToCart}
-        disabled={isLoading}
-        className={`absolute top-4 right-4 bg-white text-gray-600 p-3 rounded-lg shadow-md
-          transform transition-all duration-300
-          ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}
-          hover:scale-110 active:scale-95
-          disabled:opacity-50 disabled:cursor-not-allowed`}
-      >
-        {isLoading ? (
-          <div className="w-5 h-5 border-2 border-gray-600 border-t-transparent rounded-full animate-spin" />
-        ) : (
-          <ShoppingBag className="w-5 h-5" />
+      <div className="absolute top-4 right-4 flex gap-2">
+        <button
+          onClick={handleAddToCart}
+          disabled={isLoading}
+          className={`bg-white text-gray-600 p-3 rounded-lg shadow-md
+            transform transition-all duration-300
+            ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}
+            hover:scale-110 active:scale-95
+            disabled:opacity-50 disabled:cursor-not-allowed`}
+        >
+          {isLoading ? (
+            <div className="w-5 h-5 border-2 border-gray-600 border-t-transparent rounded-full animate-spin" />
+          ) : (
+            <ShoppingBag className="w-5 h-5" />
+          )}
+        </button>
+
+        {/* Show edit and delete buttons only for user's own products */}
+        {product.userEmail === localStorage.getItem('userEmail') && (
+          <>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                navigate(`/edit-product/${product._id}`);
+              }}
+              className={`bg-white text-gray-600 p-3 rounded-lg shadow-md
+                transform transition-all duration-300
+                ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}
+                hover:scale-110 active:scale-95`}
+            >
+              <Edit className="w-5 h-5" />
+            </button>
+
+            <button
+              onClick={handleDelete}
+              disabled={isDeleting}
+              className={`bg-white text-red-500 p-3 rounded-lg shadow-md
+                transform transition-all duration-300
+                ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}
+                hover:scale-110 active:scale-95
+                disabled:opacity-50 disabled:cursor-not-allowed`}
+            >
+              {isDeleting ? (
+                <div className="w-5 h-5 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+              ) : (
+                <Trash2 className="w-5 h-5" />
+              )}
+            </button>
+          </>
         )}
-      </button>
+      </div>
     </div>
   );
 };
