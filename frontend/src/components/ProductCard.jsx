@@ -1,56 +1,97 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { ShoppingBag, Edit, Trash2 } from 'lucide-react';
+import { ShoppingBag, Edit, Trash2, AlertCircle } from 'lucide-react';
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, onDelete }) => {
   const cardRef = useRef(null);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [error, setError] = useState(null);
+
+  const showNotification = (message, type = 'success') => {
+    const notification = document.createElement('div');
+    notification.className = `
+      fixed bottom-4 right-4 p-4 rounded-lg shadow-lg transform transition-all duration-300
+      flex items-center space-x-2 z-50
+      ${type === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white
+    `;
+
+    const icon = document.createElement('span');
+    icon.innerHTML = type === 'success' 
+      ? '✓'
+      : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>`;
+    
+    const text = document.createElement('span');
+    text.textContent = message;
+
+    notification.appendChild(icon);
+    notification.appendChild(text);
+    document.body.appendChild(notification);
+
+    // Animate in
+    setTimeout(() => {
+      notification.style.transform = 'translateY(-1rem)';
+    }, 100);
+
+    // Animate out and remove
+    setTimeout(() => {
+      notification.style.transform = 'translateY(100%)';
+      notification.style.opacity = '0';
+      setTimeout(() => {
+        document.body.removeChild(notification);
+      }, 300);
+    }, 3000);
+  };
 
   const handleDelete = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (!window.confirm('Are you sure you want to delete this product?')) {
-      return;
-    }
+    // Show confirmation dialog
+    const confirmed = window.confirm(
+      'Are you sure you want to delete this product?\nThis action cannot be undone.'
+    );
+
+    if (!confirmed) return;
+
+    setIsDeleting(true);
+    setError(null);
 
     try {
-      setIsDeleting(true);
-      await axios.delete(`${import.meta.env.VITE_API_URL}/api/products/delete/${product._id}`, {
-        data: { userEmail: localStorage.getItem('userEmail') }
-      });
+      const response = await axios.delete(
+        `${import.meta.env.VITE_API_URL}/api/products/delete/${product._id}`,
+        {
+          data: { userEmail: localStorage.getItem('userEmail') }
+        }
+      );
 
-      // Show success message
-      const notification = document.createElement('div');
-      notification.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-transform duration-300 translate-y-0';
-      notification.textContent = 'Product deleted successfully!';
-      document.body.appendChild(notification);
-      
-      setTimeout(() => {
-        notification.style.transform = 'translateY(100%)';
-        setTimeout(() => {
-          document.body.removeChild(notification);
-          // Reload the page to refresh the product list
-          window.location.reload();
-        }, 300);
-      }, 2000);
+      if (response.data.success) {
+        showNotification('Product deleted successfully');
+        if (onDelete) {
+          onDelete(product._id);
+        } else {
+          // Fallback to page reload if no onDelete handler
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        }
+      } else {
+        throw new Error(response.data.message || 'Failed to delete product');
+      }
     } catch (error) {
       console.error('Error deleting product:', error);
-      
-      // Show error message
-      const notification = document.createElement('div');
-      notification.className = 'fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-transform duration-300 translate-y-0';
-      notification.textContent = error.response?.data?.message || 'Failed to delete product';
-      document.body.appendChild(notification);
-      
-      setTimeout(() => {
-        notification.style.transform = 'translateY(100%)';
-        setTimeout(() => document.body.removeChild(notification), 300);
-      }, 2000);
+      setError(error.response?.data?.message || 'Failed to delete product');
+      showNotification(
+        error.response?.data?.message || 'Failed to delete product',
+        'error'
+      );
     } finally {
       setIsDeleting(false);
     }
@@ -60,10 +101,17 @@ const ProductCard = ({ product }) => {
     const handleMouseMove = (e) => {
       const card = cardRef.current;
       if (!card) return;
+      
       const rect = card.getBoundingClientRect();
       const offsetX = e.clientX - rect.left - rect.width / 2;
       const offsetY = e.clientY - rect.top - rect.height / 2;
-      card.style.transform = `perspective(1500px) rotateX(${offsetY / 25}deg) rotateY(${offsetX / 25}deg)`;
+      
+      const sensitivity = 25; // Lower number = more sensitive
+      card.style.transform = `
+        perspective(1500px)
+        rotateX(${offsetY / sensitivity}deg)
+        rotateY(${offsetX / sensitivity}deg)
+      `;
     };
 
     const handleMouseLeave = () => {
@@ -78,97 +126,18 @@ const ProductCard = ({ product }) => {
     };
 
     const card = cardRef.current;
-    card.addEventListener('mousemove', handleMouseMove);
-    card.addEventListener('mouseleave', handleMouseLeave);
-    card.addEventListener('mouseenter', handleMouseEnter);
+    if (card) {
+      card.addEventListener('mousemove', handleMouseMove);
+      card.addEventListener('mouseleave', handleMouseLeave);
+      card.addEventListener('mouseenter', handleMouseEnter);
 
-    return () => {
-      card.removeEventListener('mousemove', handleMouseMove);
-      card.removeEventListener('mouseleave', handleMouseLeave);
-      card.removeEventListener('mouseenter', handleMouseEnter);
-    };
-  }, []);
-
-  const handleAddToCart = async (e) => {
-    e.preventDefault(); // Prevent navigation
-    e.stopPropagation(); // Prevent event bubbling
-
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        navigate("/login");
-        return;
-      }
-
-      setIsLoading(true);
-
-      const cartResponse = await axios.get(`${import.meta.env.VITE_API_URL}/api/cart`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      const existingItem = cartResponse.data.items.find(
-       (item) => item.product._id === product._id
-     );
-
-      if (existingItem) {
-        await axios.put(
-          `${import.meta.env.VITE_API_URL}/api/cart/items/${existingItem._id}`,
-          { quantity: existingItem.quantity + 1 },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-      } else {
-        await axios.post(
-          `${import.meta.env.VITE_API_URL}/api/cart/add`,
-          {
-            productId: product._id,
-            quantity: 1,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-            withCredentials: true,
-          }
-        );
-      }
-
-      // Show success message
-      const notification = document.createElement('div');
-      notification.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-transform duration-300 translate-y-0';
-      notification.textContent = 'Added to cart!';
-      document.body.appendChild(notification);
-      
-      setTimeout(() => {
-        notification.style.transform = 'translateY(100%)';
-        setTimeout(() => document.body.removeChild(notification), 300);
-      }, 2000);
-
-    } catch (error) {
-      console.error("Error managing cart:", error);
-      
-      // Show error message
-      const notification = document.createElement('div');
-      notification.className = 'fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-transform duration-300 translate-y-0';
-      notification.textContent = error.response?.data?.message || 'Failed to add to cart';
-      document.body.appendChild(notification);
-      
-      setTimeout(() => {
-        notification.style.transform = 'translateY(100%)';
-        setTimeout(() => document.body.removeChild(notification), 300);
-      }, 2000);
-    } finally {
-      setIsLoading(false);
+      return () => {
+        card.removeEventListener('mousemove', handleMouseMove);
+        card.removeEventListener('mouseleave', handleMouseLeave);
+        card.removeEventListener('mouseenter', handleMouseEnter);
+      };
     }
-  };
+  }, []);
 
   return (
     <div 
@@ -220,22 +189,6 @@ const ProductCard = ({ product }) => {
       </Link>
 
       <div className="absolute top-4 right-4 flex gap-2">
-        <button
-          onClick={handleAddToCart}
-          disabled={isLoading}
-          className={`bg-white text-gray-600 p-3 rounded-lg shadow-md
-            transform transition-all duration-300
-            ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}
-            hover:scale-110 active:scale-95
-            disabled:opacity-50 disabled:cursor-not-allowed`}
-        >
-          {isLoading ? (
-            <div className="w-5 h-5 border-2 border-gray-600 border-t-transparent rounded-full animate-spin" />
-          ) : (
-            <ShoppingBag className="w-5 h-5" />
-          )}
-        </button>
-
         {/* Show edit and delete buttons only for user's own products */}
         {product.userEmail === localStorage.getItem('userEmail') && (
           <>
@@ -249,6 +202,7 @@ const ProductCard = ({ product }) => {
                 transform transition-all duration-300
                 ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}
                 hover:scale-110 active:scale-95`}
+              title="Edit product"
             >
               <Edit className="w-5 h-5" />
             </button>
@@ -261,6 +215,7 @@ const ProductCard = ({ product }) => {
                 ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}
                 hover:scale-110 active:scale-95
                 disabled:opacity-50 disabled:cursor-not-allowed`}
+              title="Delete product"
             >
               {isDeleting ? (
                 <div className="w-5 h-5 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
@@ -271,6 +226,13 @@ const ProductCard = ({ product }) => {
           </>
         )}
       </div>
+
+      {error && (
+        <div className="absolute bottom-4 left-4 right-4 bg-red-100 text-red-800 p-3 rounded-lg flex items-center space-x-2">
+          <AlertCircle className="w-5 h-5" />
+          <span className="text-sm">{error}</span>
+        </div>
+      )}
     </div>
   );
 };

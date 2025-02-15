@@ -1,23 +1,68 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
+import axios from 'axios';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [sort, setSort] = useState('latest'); // latest, price-low-high, price-high-low
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/products`);
-        const data = await response.json();
-        setProducts(data);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
-
     fetchProducts();
   }, []);
+
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
+      
+      if (response.data.success) {
+        let sortedProducts = [...response.data.products];
+        
+        // Apply sorting
+        switch(sort) {
+          case 'price-low-high':
+            sortedProducts.sort((a, b) => a.price - b.price);
+            break;
+          case 'price-high-low':
+            sortedProducts.sort((a, b) => b.price - a.price);
+            break;
+          default: // latest
+            sortedProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        }
+        
+        setProducts(sortedProducts);
+      } else {
+        setError('Failed to fetch products');
+      }
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      setError('Failed to load products. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSortChange = (newSort) => {
+    setSort(newSort);
+    let sortedProducts = [...products];
+    
+    switch(newSort) {
+      case 'price-low-high':
+        sortedProducts.sort((a, b) => a.price - b.price);
+        break;
+      case 'price-high-low':
+        sortedProducts.sort((a, b) => b.price - a.price);
+        break;
+      default: // latest
+        sortedProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    }
+    
+    setProducts(sortedProducts);
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -30,14 +75,6 @@ const Home = () => {
               <Link to="/collection" className="text-gray-600">Collection</Link>
               <Link to="/cart" className="text-gray-600">Cart</Link>
               <Link to="/contact" className="text-gray-600">Contact</Link>
-            </div>
-
-            <div className="flex-1 flex justify-center">
-              <Link to="/" className="text-3xl">
-                <svg viewBox="0 0 24 24" className="w-8 h-8" fill="none" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-              </Link>
             </div>
 
             <div className="flex items-center space-x-8">
@@ -91,16 +128,48 @@ const Home = () => {
       {/* Popular Collection */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-serif text-center mb-12">Popular Collection</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {products.length > 0 ? (
-              products.map((product) => (
-                <ProductCard key={product._id} product={product} />
-              ))
-            ) : (
-              <p className="text-center col-span-4 text-gray-600">No products available</p>
-            )}
+          <div className="flex justify-between items-center mb-12">
+            <h2 className="text-4xl font-serif">Popular Collection</h2>
+            <div className="flex items-center space-x-4">
+              <label htmlFor="sort" className="text-gray-600">Sort by:</label>
+              <select
+                id="sort"
+                value={sort}
+                onChange={(e) => handleSortChange(e.target.value)}
+                className="border rounded-lg px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="latest">Latest</option>
+                <option value="price-low-high">Price: Low to High</option>
+                <option value="price-high-low">Price: High to Low</option>
+              </select>
+            </div>
           </div>
+
+          {loading ? (
+            <div className="flex justify-center items-center h-64">
+              <div className="animate-spin rounded-full h-20 w-20 border-4 border-black border-t-transparent"></div>
+            </div>
+          ) : error ? (
+            <div className="text-center text-red-600 py-8">
+              <p>{error}</p>
+              <button 
+                onClick={fetchProducts}
+                className="mt-4 bg-black text-white px-6 py-2 rounded hover:bg-gray-800"
+              >
+                Try Again
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {products.length > 0 ? (
+                products.map((product) => (
+                  <ProductCard key={product._id} product={product} />
+                ))
+              ) : (
+                <p className="text-center col-span-4 text-gray-600">No products available</p>
+              )}
+            </div>
+          )}
         </div>
       </section>
 

@@ -1,26 +1,22 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { AlertCircle } from 'lucide-react';
 
 const ProductForm = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
+  const [stock, setStock] = useState(1);
   const [images, setImages] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
-  const [toastMessage, setToastMessage] = useState("");
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  // Handle toast messages
-  useEffect(() => {
-    if (toastMessage) {
-      const timer = setTimeout(() => setToastMessage(""), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [toastMessage]);
+  const [successMessage, setSuccessMessage] = useState("");
 
   // Fetch product data if in edit mode
   useEffect(() => {
@@ -29,7 +25,7 @@ const ProductForm = () => {
         try {
           setIsLoading(true);
           const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/${id}`);
-          const productData = response.data;
+          const productData = response.data.product;
           setProduct(productData);
           setProductName(productData.name);
           setDescription(productData.description);
@@ -37,7 +33,7 @@ const ProductForm = () => {
           setCategory(productData.category);
         } catch (error) {
           console.error('Error fetching product:', error);
-          setToastMessage('Failed to fetch product details');
+          setError('Failed to fetch product details. Please try again.');
         } finally {
           setIsLoading(false);
         }
@@ -56,21 +52,58 @@ const ProductForm = () => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    setImages(files);
-    const previews = files.map((file) => URL.createObjectURL(file));
+    
+    // Validate file size and type
+    const validFiles = files.filter(file => {
+      if (file.size > 5 * 1024 * 1024) {
+        setError(`File ${file.name} is too large. Maximum size is 5MB`);
+        return false;
+      }
+      if (!file.type.startsWith('image/')) {
+        setError(`File ${file.name} is not an image`);
+        return false;
+      }
+      return true;
+    });
+
+    if (validFiles.length > 5) {
+      setError('You can only upload up to 5 images');
+      return;
+    }
+
+    setImages(validFiles);
+    const previews = validFiles.map((file) => URL.createObjectURL(file));
     setPreviewImages(previews);
+    setError(""); // Clear any previous errors
   };
 
   const validateForm = () => {
     if (!productName || !description || !price || !category) {
-      setToastMessage("Please fill in all fields.");
+      setError("Please fill in all required fields");
       return false;
     }
+    
+    if (productName.length < 3) {
+      setError("Product name must be at least 3 characters long");
+      return false;
+    }
+    
+    if (description.length < 10) {
+      setError("Description must be at least 10 characters long");
+      return false;
+    }
+    
+    if (parseFloat(price) <= 0) {
+      setError("Price must be greater than 0");
+      return false;
+    }
+    
     // Only require images for new products
     if (!product && images.length === 0) {
-      setToastMessage("Please upload at least one image.");
+      setError("Please upload at least one image");
       return false;
     }
+
     return true;
   };
 
@@ -80,18 +113,17 @@ const ProductForm = () => {
 
     try {
       setIsLoading(true);
+      setError("");
+      
       const formData = new FormData();
       formData.append('name', productName);
       formData.append('description', description);
       formData.append('price', price);
       formData.append('category', category);
+      formData.append('stock', stock);
+      formData.append('userEmail', localStorage.getItem('userEmail'));
       
-      if (!product) {
-        // Creating new product
-        formData.append('userEmail', localStorage.getItem('userEmail'));
-      }
-
-      // Append each image to formData only if new images are selected
+      // Append each image to formData
       if (images.length > 0) {
         images.forEach((image) => {
           formData.append('images', image);
@@ -102,9 +134,7 @@ const ProductForm = () => {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-        withCredentials: true,
-        maxBodyLength: Infinity,
-        maxContentLength: Infinity
+        timeout: 10000 // 10 second timeout
       };
 
       let response;
@@ -115,7 +145,7 @@ const ProductForm = () => {
           formData,
           config
         );
-        setToastMessage("Product updated successfully!");
+        setSuccessMessage("Product updated successfully!");
       } else {
         // Create new product
         response = await axios.post(
@@ -123,41 +153,30 @@ const ProductForm = () => {
           formData,
           config
         );
-        setToastMessage("Product created successfully!");
+        setSuccessMessage("Product created successfully!");
       }
 
-      if (!response.data) {
-        throw new Error(product ? 'Failed to update product' : 'Failed to create product');
+      if (!response.data.success) {
+        throw new Error(response.data.message || 'Operation failed');
       }
 
-      // Reset form if creating new product
-      if (!product) {
-        resetForm();
-      }
-      
-      // Add a delay before navigation to show the success message
+      // Show success message and redirect
       setTimeout(() => {
-        window.location.href = '/my-products';
+        navigate('/my-products');
       }, 2000);
     } catch (error) {
-      console.error('Error creating product:', error);
-      setToastMessage(
+      console.error('Error:', error);
+      setError(
         error.response?.data?.message ||
         error.message ||
-        'Failed to create product. Please try again.'
+        'An error occurred. Please try again.'
       );
+      
+      // Scroll to error message
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const resetForm = () => {
-    setProductName("");
-    setDescription("");
-    setPrice("");
-    setCategory("");
-    setImages([]);
-    setPreviewImages([]);
   };
 
   return (
@@ -174,73 +193,115 @@ const ProductForm = () => {
             </p>
           </div>
 
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-800 rounded-lg p-4 flex items-center space-x-2">
+              <AlertCircle className="h-5 w-5 text-red-600" />
+              <span>{error}</span>
+            </div>
+          )}
+
+          {/* Success Message */}
+          {successMessage && (
+            <div className="bg-green-50 border border-green-200 text-green-800 rounded-lg p-4">
+              {successMessage}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Product Name
+                Product Name*
               </label>
               <input
                 type="text"
-                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                 value={productName}
                 onChange={(e) => setProductName(e.target.value)}
+                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                 required
+                minLength={3}
+                maxLength={100}
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Description
+                Description*
               </label>
               <textarea
-                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 h-32"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 h-32"
                 required
+                minLength={10}
+                maxLength={1000}
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Price
+                Price* ($)
               </label>
               <input
                 type="number"
-                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
+                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                 required
+                min="0.01"
+                step="0.01"
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Category
+                Stock*
+              </label>
+              <input
+                type="number"
+                value={stock}
+                onChange={(e) => setStock(e.target.value)}
+                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                required
+                min="1"
+                step="1"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Category*
               </label>
               <select
-                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
+                className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                 required
               >
                 <option value="">Select a category</option>
-                <option value="Electronics">Electronics</option>
-                <option value="Clothing">Clothing</option>
-                <option value="Accessories">Accessories</option>
+                <option value="bedroom">Bedroom</option>
+                <option value="livingroom">Living Room</option>
+                <option value="kitchen">Kitchen</option>
+                <option value="bathroom">Bathroom</option>
               </select>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Upload Product Images
+                Images* (Up to 5)
               </label>
               <input
                 type="file"
-                multiple
                 onChange={handleImageChange}
+                multiple
+                accept="image/*"
                 className="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
               />
-              {/* Show newly selected images */}
+              <p className="mt-1 text-sm text-gray-500">
+                Maximum 5 images, 5MB each. Supported formats: JPG, PNG, WebP
+              </p>
+
+              {/* Preview Images */}
               {previewImages.length > 0 && (
                 <div className="mt-4">
                   <p className="text-sm font-medium text-gray-700 mb-2">New Images:</p>
@@ -257,8 +318,8 @@ const ProductForm = () => {
                 </div>
               )}
 
-              {/* Show existing product images in edit mode */}
-              {product && product.images && product.images.length > 0 && (
+              {/* Existing Images */}
+              {product?.images?.length > 0 && (
                 <div className="mt-4">
                   <p className="text-sm font-medium text-gray-700 mb-2">Current Images:</p>
                   <div className="grid grid-cols-2 gap-4">
@@ -311,13 +372,6 @@ const ProductForm = () => {
           </div>
         </div>
       </div>
-
-      {/* Toast Notification */}
-      {toastMessage && (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-black text-white py-3 px-6 rounded-lg shadow-xl z-50 transition-opacity duration-200">
-          {toastMessage}
-        </div>
-      )}
     </div>
   );
 };
