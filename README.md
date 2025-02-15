@@ -210,3 +210,28 @@ How to create a Navbar component.
 How to reuse the same component across multiple pages.
 
 How to make a Navbar responsive.
+
+
+
+Milestone 16: Product Info Page
+
+Overview 🌟
+
+In this milestone, we will create a product info page that displays all product details, allows users to select quantity, and includes an 'Add to Cart' button.
+
+Learning Goals 🎯
+
+By completing this milestone, you will learn:
+
+How to create a new page to display each product.
+
+How to add a quantity selector and an 'Add to Cart' button.
+
+Steps for Milestone 16 📝
+
+Create a new product info page that displays all the product details.
+
+Add a quantity selector to allow users to choose the number of items.
+
+Include an 'Add to Cart' button to enable users to add products to their cart.
+
