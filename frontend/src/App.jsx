@@ -7,6 +7,7 @@ import SignUp from './pages/SignUp';
 import NotFound from './pages/NotFound';
 import MyProducts from './pages/MyProducts';
 import Cart from './pages/Cart';
+import ProductDetails from './pages/ProductDetails';
 import Navbar from './components/Navbar';
 
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
             <Route path="/edit-product/:id" element={<ProductForm />} />
             <Route path="/my-products" element={<MyProducts />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

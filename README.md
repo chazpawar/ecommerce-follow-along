@@ -193,3 +193,20 @@ In this milestone, we implemented the ability to delete products by adding a del
 - Secure deletion (only product owners can delete their products)
 - Automatic cleanup of uploaded image files
 - User feedback with loading states and notifications
+
+
+Milestone 15: Navbar Component
+
+Overview 🌟
+
+In this milestone, we will create a reusable Navbar component and integrate it into every screen of our application. The Navbar will contain links to different pages and will be responsive to all screen sizes.
+
+Learning Goals 🎯
+
+By completing this milestone, you will learn:
+
+How to create a Navbar component.
+
+How to reuse the same component across multiple pages.
+
+How to make a Navbar responsive.
