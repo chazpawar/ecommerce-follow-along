@@ -69,15 +69,15 @@ const Navbar = () => {
     >
       <div className="max-w-[1100px] h-full mx-auto flex items-center justify-center">
         <nav className="flex items-center gap-8 w-full justify-center">
-          <NavLink to="/" icon={Home} text="HOME" />
-          <NavLink to="/cart" icon={ShoppingCart} text="CART" />
           {userEmail ? (
             <>
+              <NavLink to="/home" icon={Home} text="HOME" />
+              <NavLink to="/cart" icon={ShoppingCart} text="CART" />
               <NavLink to="/my-products" icon={User} text="MY PRODUCTS" />
               <NavLink to="/create-product" icon={Plus} text="Create-Product" />
             </>
           ) : (
-            <NavLink to="/login" icon={LogIn} text="LOGIN" />
+            <NavLink to="/signup" icon={LogIn} text="SIGN UP" />
           )}
         </nav>
       </div>

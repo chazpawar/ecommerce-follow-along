@@ -48,7 +48,7 @@ const Login = () => {
         localStorage.removeItem('rememberedEmail');
       }
       
-      navigate('/');
+      navigate('/home'); // Changed from '/' to '/home'
     } catch (error) {
       setErrors({ submit: 'Failed to sign in. Please check your credentials.' });
     } finally {

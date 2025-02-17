@@ -100,15 +100,6 @@ Multer for handling file uploads.
 - Validated user credentials and compared the encrypted password using `bcrypt`.
 - Returned appropriate responses for successful login and failed attempts.
 
-### Login Endpoint:
-**POST /api/users/login**
-
-#### Request Body:
-```json
-{
-  "email": "user@example.com",
-  "password": "password123"
-}
 
 ## Milestone 8: Product Card and Homepage Layout
 
@@ -194,7 +185,6 @@ In this milestone, we implemented the ability to delete products by adding a del
 - Automatic cleanup of uploaded image files
 - User feedback with loading states and notifications
 
-
 Milestone 15: Navbar Component
 
 Overview 🌟
@@ -210,8 +200,6 @@ How to create a Navbar component.
 How to reuse the same component across multiple pages.
 
 How to make a Navbar responsive.
-
-
 
 Milestone 16: Product Info Page
 
@@ -248,3 +236,48 @@ Updated User schema to include a cart.
 Created Cart schema to store product details.
 
 Developed API endpoint to add products to the cart.
+
+## Milestone 18: Backend Cart Endpoint 🛒
+
+Overview 📌
+Implemented backend functionality to fetch products from user's cart, enabling the display of cart items on the cart page.
+
+Key Features Implemented 🔑
+- Created a GET endpoint (`/api/cart`) to fetch all products in user's cart
+- Implemented secure authentication for cart operations
+- Added population of product details in cart responses
+- Enhanced error handling for cart operations
+
+Technical Details 🛠️
+- Endpoint: `GET /api/cart`
+- Authentication: Protected route using auth middleware
+- Response: Returns array of cart items with populated product details
+- Error Handling: Proper error responses for invalid requests or server errors
+
+## Milestone 19: Cart Page and Quantity Management 🛒
+
+Overview 📌
+In this milestone, we created a cart page UI and implemented functionality to manage product quantities within the cart.
+
+Learning Goals Achieved 🎯
+- Created a cart page UI that displays all cart products with details
+- Implemented quantity adjustment using + and - buttons
+- Added backend endpoint for updating product quantities in cart
+
+Key Features 🛠️
+1. Cart Page UI:
+   - Displays products with images and details
+   - Shows quantity controls for each product
+   - Calculates and displays total price
+   - Handles empty cart state
+
+2. Quantity Management:
+   - "+ / -" buttons for each product
+   - Stock validation to prevent overselling
+   - Real-time price updates
+   - Error handling for failed operations
+
+Backend Integration:
+   - PUT endpoint for updating quantities
+   - Stock availability checks
+   - Proper error responses
