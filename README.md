@@ -235,3 +235,16 @@ Add a quantity selector to allow users to choose the number of items.
 
 Include an 'Add to Cart' button to enable users to add products to their cart.
 
+Milestone 17 - Add Products to Cart 🛒
+
+Overview 📌
+
+Implemented backend functionality to add products to the cart and store them in the database.
+
+Key Updates 📝
+
+Updated User schema to include a cart.
+
+Created Cart schema to store product details.
+
+Developed API endpoint to add products to the cart.

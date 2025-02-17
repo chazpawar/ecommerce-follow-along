@@ -9,6 +9,22 @@ const userSchema = new mongoose.Schema({
     minlength: [2, 'Name must be at least 2 characters long'],
     maxlength: [50, 'Name cannot be more than 50 characters']
   },
+  cart: [{
+    product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product',
+      required: true
+    },
+    quantity: {
+      type: Number,
+      required: true,
+      min: [1, 'Quantity must be at least 1']
+    },
+    addedAt: {
+      type: Date,
+      default: Date.now
+    }
+  }],
   email: {
     type: String,
     required: [true, 'Please provide your email'],

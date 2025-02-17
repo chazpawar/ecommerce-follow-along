@@ -5,6 +5,7 @@ const fs = require('fs');
 const connectDB = require('./config/db.config');
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
+const cartRoutes = require('./routes/cartRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -63,6 +64,7 @@ app.get('/api/health', (req, res) => {
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/cart', cartRoutes);
 
 const PORT = process.env.PORT || 7000;
 let currentPort = PORT;
