@@ -5,6 +5,7 @@ const Product = require('../models/Product');
 const fs = require('fs').promises;  // Using promises version for better async handling
 const path = require('path');
 const ErrorResponse = require('../utils/errorResponse');
+const { protect } = require('../middleware/auth');
 
 // Ensure uploads directory exists
 const uploadsDir = path.join(__dirname, '../uploads');
@@ -83,7 +84,7 @@ const validateProduct = (req, res, next) => {
 };
 
 // POST endpoint to create a new product
-router.post('/create', upload.array('images', 5), validateProduct, async (req, res) => {
+router.post('/create', protect, upload.array('images', 5), validateProduct, async (req, res) => {
   try {
     const { name, description, price, category, userEmail } = req.body;
 
@@ -123,6 +124,79 @@ router.post('/create', upload.array('images', 5), validateProduct, async (req, r
     res.status(500).json({
       success: false,
       message: 'Failed to create product',
+      error: error.message
+    });
+  }
+});
+
+// PUT endpoint to update a product
+router.put('/update/:id', protect, upload.array('images', 5), validateProduct, async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const { name, description, price, category, userEmail } = req.body;
+
+    // Check if product exists
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: 'Product not found'
+      });
+    }
+
+    // Verify ownership
+    if (product.userEmail !== userEmail) {
+      return res.status(403).json({
+        success: false,
+        message: 'Not authorized to update this product'
+      });
+    }
+
+    // Handle new images if uploaded
+    let imagePaths = product.images; // Keep existing images by default
+    if (req.files && req.files.length > 0) {
+      // Delete old images
+      await Promise.all(product.images.map(async (image) => {
+        try {
+          await fs.unlink(path.join(__dirname, '..', image));
+        } catch (err) {
+          console.warn(`Failed to delete old image: ${image}`, err);
+        }
+      }));
+
+      // Set new images
+      imagePaths = req.files.map(file => `/uploads/${file.filename}`);
+    }
+
+    // Update product
+    const updatedProduct = await Product.findByIdAndUpdate(
+      productId,
+      {
+        name,
+        description,
+        price: parseFloat(price),
+        category,
+        images: imagePaths,
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: 'Product updated successfully',
+      product: updatedProduct
+    });
+
+  } catch (error) {
+    if (req.files) {
+      req.files.forEach(file => {
+        fs.unlink(file.path).catch(console.error);
+      });
+    }
+
+    res.status(500).json({
+      success: false,
+      message: 'Failed to update product',
       error: error.message
     });
   }
@@ -170,7 +244,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // DELETE endpoint to delete a product
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', protect, async (req, res) => {
   let imagesToDelete = [];
   
   try {

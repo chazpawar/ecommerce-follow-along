@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Home, ShoppingCart, LogIn, User, Plus } from 'lucide-react';
+import { Home, ShoppingCart, LogIn, User, Plus, UserCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Navbar = () => {
@@ -75,6 +75,7 @@ const Navbar = () => {
               <NavLink to="/cart" icon={ShoppingCart} text="CART" />
               <NavLink to="/my-products" icon={User} text="MY PRODUCTS" />
               <NavLink to="/create-product" icon={Plus} text="Create-Product" />
+              <NavLink to="/profile" icon={UserCircle} text="PROFILE" />
             </>
           ) : (
             <NavLink to="/signup" icon={LogIn} text="SIGN UP" />

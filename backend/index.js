@@ -10,31 +10,16 @@ require('dotenv').config();
 
 const app = express();
 
-// More permissive CORS configuration for development
-app.use(cors({
-  origin: function(origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if(!origin) return callback(null, true);
-    
-    const allowedOrigins = [
-      'http://localhost:5173',
-      'http://127.0.0.1:5173',
-      'http://localhost:3000',
-      'http://localhost:7000'
-    ];
-    
-    if(allowedOrigins.indexOf(origin) === -1){
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    
-    return callback(null, true);
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
-  exposedHeaders: ['Content-Range', 'X-Content-Range']
-}));
+// CORS configuration for development
+app.use(cors());
+
+// Log incoming requests in development
+if (process.env.NODE_ENV !== 'production') {
+  app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+  });
+}
 
 // Increase payload size limit for file uploads
 app.use(express.json({ limit: '50mb' }));
@@ -66,29 +51,45 @@ app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 
-const PORT = process.env.PORT || 7000;
+const PORT = parseInt(process.env.PORT) || 7000;
 let currentPort = PORT;
 
 // Function to find an available port
 const findAvailablePort = async (startPort) => {
   const net = require('net');
   
-  return new Promise((resolve, reject) => {
-    const server = net.createServer();
-    
-    server.listen(startPort, () => {
-      const port = server.address().port;
-      server.close(() => resolve(port));
-    });
-
-    server.on('error', (err) => {
-      if (err.code === 'EADDRINUSE') {
-        resolve(findAvailablePort(startPort + 1));
-      } else {
-        reject(err);
+    const tryPort = (port) => {
+      // Ensure port stays within valid range
+      if (port >= 65536) {
+        throw new Error('No available ports found in valid range');
       }
-    });
-  });
+  
+      return new Promise((resolve, reject) => {
+        const server = net.createServer();
+        
+        server.once('error', (err) => {
+          if (err.code === 'EADDRINUSE') {
+            server.close(() => resolve(tryPort(parseInt(port) + 1)));
+          } else {
+            reject(err);
+          }
+        });
+        
+        server.once('listening', () => {
+          const usedPort = server.address().port;
+          server.close(() => resolve(usedPort));
+        });
+        
+        server.listen(parseInt(port), '0.0.0.0');
+      });
+    };
+    
+    try {
+      return await tryPort(parseInt(startPort));
+    } catch (err) {
+      console.error('Error finding available port:', err);
+      throw err;
+    }
 };
 
 // Start the server with port finding
@@ -97,16 +98,31 @@ const startServer = async () => {
     const availablePort = await findAvailablePort(PORT);
     currentPort = availablePort;
 
-    app.listen(availablePort, '0.0.0.0', () => {
+    const server = app.listen(availablePort, '0.0.0.0', () => {
       console.log(`Server is running on port ${availablePort}`);
       if (availablePort !== PORT) {
         console.log(`Note: Original port ${PORT} was in use, using ${availablePort} instead`);
         console.log(`Update your frontend API URL to: http://localhost:${availablePort}`);
       }
     });
+
+    server.on('error', (err) => {
+      if (err.code === 'EADDRINUSE') {
+        console.log(`Port ${availablePort} is in use, trying another port...`);
+        server.close();
+        startServer();
+      } else {
+        console.error('Server error:', err);
+      }
+    });
   } catch (error) {
     console.error('Failed to start server:', error);
-    process.exit(1);
+    if (error.code === 'EADDRINUSE') {
+      console.log('Retrying with next available port...');
+      startServer();
+    } else {
+      process.exit(1);
+    }
   }
 };
 

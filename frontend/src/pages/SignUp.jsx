@@ -55,10 +55,21 @@ const SignUp = () => {
     // Password validation
     if (!password) {
       newErrors.password = 'Password is required';
-    } else if (password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters long';
-    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
-      newErrors.password = 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
+    } else {
+      const hasLower = /[a-z]/.test(password);
+      const hasUpper = /[A-Z]/.test(password);
+      const hasNumber = /\d/.test(password);
+      const isLongEnough = password.length >= 8;
+
+      if (!isLongEnough || !hasLower || !hasUpper || !hasNumber) {
+        let requirements = [];
+        if (!isLongEnough) requirements.push('be at least 8 characters long');
+        if (!hasLower) requirements.push('have a lowercase letter');
+        if (!hasUpper) requirements.push('have an uppercase letter');
+        if (!hasNumber) requirements.push('have a number');
+        
+        newErrors.password = `Password must ${requirements.join(', ')}`;
+      }
     }
 
     setErrors(newErrors);
@@ -74,7 +85,8 @@ const SignUp = () => {
 
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:7000/api/users/register', {
+      console.log('Starting signup request to:', `${import.meta.env.VITE_API_URL}/api/users/signup`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -82,17 +94,26 @@ const SignUp = () => {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      let data;
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        data = await response.json();
+      } else {
+        const text = await response.text();
+        console.error('Received non-JSON response:', text);
+        throw new Error('Server returned invalid response format');
+      }
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to register');
+        throw new Error(data.message || data.error || 'Failed to register');
       }
 
       // Clear form and navigate to login
       setFormData({ name: '', email: '', password: '' });
       navigate('/login', { state: { message: 'Registration successful! Please log in.' } });
     } catch (error) {
-      setErrors({ submit: error.message });
+      console.error('Signup error:', error);
+      setErrors({ submit: error.message || 'Failed to connect to server. Please try again.' });
     } finally {
       setIsLoading(false);
     }

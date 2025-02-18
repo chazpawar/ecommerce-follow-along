@@ -8,6 +8,7 @@ import NotFound from './pages/NotFound';
 import MyProducts from './pages/MyProducts';
 import Cart from './pages/Cart';
 import ProductDetails from './pages/ProductDetails';
+import Profile from './pages/Profile';
 import Navbar from './components/Navbar';
 
 const AppContent = () => {
@@ -27,6 +28,7 @@ const AppContent = () => {
           <Route path="/my-products" element={<MyProducts />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

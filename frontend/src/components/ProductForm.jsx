@@ -130,9 +130,11 @@ const ProductForm = () => {
         });
       }
 
+      const token = localStorage.getItem('token');
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`
         },
         timeout: 10000 // 10 second timeout
       };
@@ -288,7 +290,7 @@ const ProductForm = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Images* (Up to 5)
+                {product ? 'Images (Optional - Leave empty to keep current images)' : 'Images* (Up to 5)'}
               </label>
               <input
                 type="file"

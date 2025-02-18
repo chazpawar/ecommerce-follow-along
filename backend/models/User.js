@@ -43,6 +43,32 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: null
   },
+  addresses: [{
+    street: {
+      type: String,
+      required: [true, 'Street address is required']
+    },
+    city: {
+      type: String,
+      required: [true, 'City is required']
+    },
+    state: {
+      type: String,
+      required: [true, 'State is required']
+    },
+    zipCode: {
+      type: String,
+      required: [true, 'ZIP code is required']
+    },
+    country: {
+      type: String,
+      required: [true, 'Country is required']
+    },
+    isDefault: {
+      type: Boolean,
+      default: false
+    }
+  }],
   resetPasswordToken: String,
   resetPasswordExpire: Date,
   lastLogin: {
