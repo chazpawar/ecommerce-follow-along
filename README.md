@@ -73,6 +73,55 @@
 6. Verify the new address appears in profile
 7. Test cancel functionality to ensure proper navigation
 
+## Milestone 22: Backend Address Integration
+
+### Features Implemented
+
+#### Backend Endpoint
+- Created new endpoint `/api/users/:id/address` for adding addresses
+- Implemented address storage in user profile database
+- Added proper validation for required address fields
+- Automatic default address setting for first address
+
+#### Technical Implementation
+
+##### API Endpoint Structure
+```javascript
+POST /api/users/:id/address
+Protected Route (Requires Authentication)
+
+Request Body:
+{
+  "country": "string",
+  "city": "string",
+  "street": "string",
+  "address2": "string" (optional),
+  "zipCode": "string",
+  "addressType": "string"
+}
+
+Response:
+{
+  "success": true,
+  "message": "Address added successfully",
+  "data": [addresses]
+}
+```
+
+##### Backend Components
+- Added address controller in userController.js
+- Updated User model with address schema
+- Added protected route in userRoutes.js
+- Implemented proper error handling
+- Added authentication protection
+
+### Integration Testing
+1. Log in to get authentication token
+2. Use the token to make POST request to add address
+3. Verify address appears in user profile
+4. Check default address setting
+5. Validate error handling for missing fields
+
 ## Future Improvements
 - Address editing functionality
 - Address type customization

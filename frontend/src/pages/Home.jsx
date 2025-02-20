@@ -3,14 +3,42 @@ import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import axios from 'axios';
 
+const slides = [
+  {
+    image: "https://www.home-designing.com/wp-content/uploads/2020/09/black-and-white-living-room.jpg",
+  },
+  {
+    image: "https://www.home-designing.com/wp-content/uploads/2020/09/open-plan-living-room-with-kitchen-island.jpg",
+  },
+  {
+    image: "https://www.home-designing.com/wp-content/uploads/2020/09/marble-coffee-table.jpg",
+  },
+  {
+    image: "https://www.home-designing.com/wp-content/uploads/2020/09/black-and-white-kitchens.jpg",
+  },
+  {
+    image: "https://www.home-designing.com/wp-content/uploads/2020/09/light-grey-modern-sofa-600x400.jpg",
+  }
+];
+
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [sort, setSort] = useState('latest'); // latest, price-low-high, price-high-low
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     fetchProducts();
+  }, []);
+
+  // Auto-sliding effect
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, 4000);
+
+    return () => clearInterval(timer);
   }, []);
 
   const fetchProducts = async () => {
@@ -70,12 +98,6 @@ const Home = () => {
       <header className="border-b">
         <nav className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-8">
-              <Link to="/" className="text-gray-600">Home</Link>
-              <Link to="/collection" className="text-gray-600">Collection</Link>
-              <Link to="/cart" className="text-gray-600">Cart</Link>
-              <Link to="/contact" className="text-gray-600">Contact</Link>
-            </div>
 
             <div className="flex items-center space-x-8">
               <Link to="/shops" className="text-gray-600">Shops</Link>
@@ -90,14 +112,19 @@ const Home = () => {
         </nav>
       </header>
 
-      {/* Hero Section */}
+      {/* Hero Section with Slider */}
       <section className="relative h-screen">
-        <div className="absolute inset-0">
-          <img 
-            src="https://www.home-designing.com/wp-content/uploads/2016/02/black-and-white-interior-design.jpg" 
-            alt="Black and white interior" 
-            className="w-full h-full object-cover"
-          />
+        <div className="absolute inset-0 overflow-hidden">
+          {slides.map((slide, index) => (
+            <img 
+              key={index}
+              src={slide.image} 
+              alt={`Slide ${index + 1}`} 
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                index === currentSlide ? 'opacity-100' : 'opacity-0'
+              }`}
+            />
+          ))}
           <div className="absolute inset-0 bg-black bg-opacity-30"></div>
         </div>
         <div className="relative container mx-auto px-6 h-full flex items-center">
@@ -109,6 +136,20 @@ const Home = () => {
               Explore Collection
             </button>
           </div>
+        </div>
+        
+        {/* Slider Navigation Dots */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-3 h-3 rounded-full transition-colors ${
+                index === currentSlide ? 'bg-white' : 'bg-white/50'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
         </div>
       </section>
 

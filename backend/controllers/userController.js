@@ -158,8 +158,63 @@ const getUser = async (req, res, next) => {
   }
 };
 
+// @desc    Add address to user profile
+// @route   POST /api/users/:id/address
+// @access  Private
+const addAddress = async (req, res, next) => {
+  try {
+    const { country, city, street: address1, address2, zipCode, addressType } = req.body;
+
+    // Validate required fields
+    if (!country || !city || !address1 || !zipCode) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide all required fields'
+      });
+    }
+
+    const user = await User.findById(req.params.id);
+    
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    // Create new address object
+    const newAddress = {
+      street: address1 + (address2 ? `, ${address2}` : ''),
+      city,
+      state: city, // Using city as state since state wasn't in the form
+      zipCode,
+      country,
+      isDefault: user.addresses.length === 0 // Make it default if it's the first address
+    };
+
+    // Add address to user's addresses array
+    user.addresses.push(newAddress);
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Address added successfully',
+      data: user.addresses
+    });
+
+  } catch (error) {
+    console.error('Add address error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error adding address',
+      error: error.message
+    });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
-  getUser
+  getUser,
+  addAddress
 };
