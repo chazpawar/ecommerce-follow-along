@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, User, AlertCircle } from 'lucide-react';
+import axios from 'axios';
 
 const SignUp = () => {
   const cardRef = useRef(null);
@@ -85,35 +86,61 @@ const SignUp = () => {
 
     setIsLoading(true);
     try {
-      console.log('Starting signup request to:', `${import.meta.env.VITE_API_URL}/api/users/signup`);
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      let data;
-      const contentType = response.headers.get("content-type");
-      if (contentType && contentType.includes("application/json")) {
-        data = await response.json();
-      } else {
-        const text = await response.text();
-        console.error('Received non-JSON response:', text);
-        throw new Error('Server returned invalid response format');
+      // First try to check if server is running
+      try {
+        await axios.get(`${import.meta.env.VITE_API_URL}/api/health`);
+      } catch (error) {
+        console.error('Server health check failed:', error);
+        throw new Error('Server is not running. Please check if the backend server is started.');
       }
 
-      if (!response.ok) {
-        throw new Error(data.message || data.error || 'Failed to register');
+      console.log('Starting signup request to:', `${import.meta.env.VITE_API_URL}/api/users/signup`);
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/users/signup`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true
+        }
+      );
+
+      const { data } = response;
+      
+      if (!data.success) {
+        throw new Error(data.message || 'Failed to register');
       }
 
       // Clear form and navigate to login
       setFormData({ name: '', email: '', password: '' });
       navigate('/login', { state: { message: 'Registration successful! Please log in.' } });
     } catch (error) {
-      console.error('Signup error:', error);
-      setErrors({ submit: error.message || 'Failed to connect to server. Please try again.' });
+      console.error('Signup error details:', {
+        message: error.message,
+        response: error.response,
+        config: error.config,
+        apiUrl: `${import.meta.env.VITE_API_URL}/api/users/signup`
+      });
+
+      if (axios.isAxiosError(error)) {
+        if (!error.response) {
+          // Network error
+          setErrors({
+            submit: 'Unable to reach the server. Please check if the backend server is running on port 7000.'
+          });
+        } else {
+          // Server responded with error
+          setErrors({
+            submit: error.response.data.message || 'Server error occurred. Please try again.'
+          });
+        }
+      } else {
+        // Non-Axios error
+        setErrors({
+          submit: error.message || 'An unexpected error occurred. Please try again.'
+        });
+      }
     } finally {
       setIsLoading(false);
     }

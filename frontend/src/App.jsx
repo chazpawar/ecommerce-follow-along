@@ -9,6 +9,7 @@ import MyProducts from './pages/MyProducts';
 import Cart from './pages/Cart';
 import ProductDetails from './pages/ProductDetails';
 import Profile from './pages/Profile';
+import AddressForm from './pages/AddressForm';
 import Navbar from './components/Navbar';
 
 const AppContent = () => {
@@ -29,6 +30,7 @@ const AppContent = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/add-address" element={<AddressForm />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

@@ -1,0 +1,665 @@
+2025-02-19T04:46:25.428Z: Starting database connection...
+2025-02-19T04:46:25.431Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:46:25.431Z: NODE_ENV: not set
+2025-02-19T04:46:25.433Z: URI format check started
+2025-02-19T04:46:25.433Z: Attempting to connect to MongoDB...
+2025-02-19T04:46:25.449Z: Starting database connection...
+2025-02-19T04:46:25.451Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:46:25.451Z: NODE_ENV: not set
+2025-02-19T04:46:25.451Z: URI format check started
+2025-02-19T04:46:25.452Z: Attempting to connect to MongoDB...
+2025-02-19T04:46:26.113Z: MongoDB Connected to host: kalvi-shard-00-00.6sq9n.mongodb.net
+2025-02-19T04:46:26.162Z: Database connection is healthy - ping successful
+2025-02-19T04:46:26.326Z: MongoDB Connected to host: kalvi-shard-00-00.6sq9n.mongodb.net
+2025-02-19T04:46:26.610Z: Database connection is healthy - ping successful
+2025-02-19T04:46:41.495Z: Starting database connection...
+2025-02-19T04:46:41.497Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:46:41.498Z: NODE_ENV: not set
+2025-02-19T04:46:41.498Z: URI format check started
+2025-02-19T04:46:41.499Z: Attempting to connect to MongoDB...
+2025-02-19T04:46:41.503Z: Starting database connection...
+2025-02-19T04:46:41.505Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:46:41.505Z: NODE_ENV: not set
+2025-02-19T04:46:41.506Z: URI format check started
+2025-02-19T04:46:41.507Z: Attempting to connect to MongoDB...
+2025-02-19T04:46:42.384Z: MongoDB Connected to host: kalvi-shard-00-02.6sq9n.mongodb.net
+2025-02-19T04:46:42.424Z: Database connection is healthy - ping successful
+2025-02-19T04:46:43.395Z: MongoDB Connected to host: kalvi-shard-00-02.6sq9n.mongodb.net
+2025-02-19T04:46:43.438Z: Database connection is healthy - ping successful
+2025-02-19T04:47:10.108Z: Starting application...
+2025-02-19T04:47:10.110Z: Environment: undefined
+2025-02-19T04:47:10.110Z: Starting application...
+2025-02-19T04:47:10.115Z: Failed to start application: Cannot access 'PORT' before initialization
+2025-02-19T04:47:10.116Z: Environment: undefined
+2025-02-19T04:47:10.117Z: Failed to start application: Cannot access 'PORT' before initialization
+2025-02-19T04:47:25.451Z: Starting application...
+2025-02-19T04:47:25.453Z: Environment: undefined
+2025-02-19T04:47:25.454Z: Failed to start application: Cannot access 'PORT' before initialization
+2025-02-19T04:48:13.274Z: Starting application...
+2025-02-19T04:48:13.275Z: Environment: undefined
+2025-02-19T04:48:13.275Z: Starting application...
+2025-02-19T04:48:13.277Z: Environment: undefined
+2025-02-19T04:48:13.277Z: Starting database connection...
+2025-02-19T04:48:13.282Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:48:13.282Z: Starting database connection...
+2025-02-19T04:48:13.283Z: NODE_ENV: not set
+2025-02-19T04:48:13.283Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:48:13.283Z: URI format check started
+2025-02-19T04:48:13.284Z: NODE_ENV: not set
+2025-02-19T04:48:13.284Z: Attempting to connect to MongoDB...
+2025-02-19T04:48:13.285Z: URI format check started
+2025-02-19T04:48:13.286Z: Attempting to connect to MongoDB...
+2025-02-19T04:48:14.322Z: MongoDB Connected to host: kalvi-shard-00-02.6sq9n.mongodb.net
+2025-02-19T04:48:14.327Z: MongoDB Connected to host: kalvi-shard-00-02.6sq9n.mongodb.net
+2025-02-19T04:48:14.366Z: Database connection is healthy - ping successful
+2025-02-19T04:48:14.366Z: Database connection is healthy - ping successful
+2025-02-19T04:48:14.367Z: Database connection successful
+2025-02-19T04:48:14.367Z: Database connection successful
+2025-02-19T04:48:26.141Z: Starting application...
+2025-02-19T04:48:26.143Z: Environment: undefined
+2025-02-19T04:48:26.144Z: Starting database connection...
+2025-02-19T04:48:26.145Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:48:26.145Z: NODE_ENV: not set
+2025-02-19T04:48:26.146Z: URI format check started
+2025-02-19T04:48:26.147Z: Attempting to connect to MongoDB...
+2025-02-19T04:48:26.177Z: Starting application...
+2025-02-19T04:48:26.179Z: Environment: undefined
+2025-02-19T04:48:26.180Z: Starting database connection...
+2025-02-19T04:48:26.180Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:48:26.181Z: NODE_ENV: not set
+2025-02-19T04:48:26.182Z: URI format check started
+2025-02-19T04:48:26.182Z: Attempting to connect to MongoDB...
+2025-02-19T04:48:51.567Z: Starting application...
+2025-02-19T04:48:51.567Z: Starting application...
+2025-02-19T04:48:51.569Z: Environment: undefined
+2025-02-19T04:48:51.569Z: Environment: undefined
+2025-02-19T04:48:51.570Z: Starting database connection...
+2025-02-19T04:48:51.570Z: Starting database connection...
+2025-02-19T04:48:51.570Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:48:51.570Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:48:51.571Z: NODE_ENV: not set
+2025-02-19T04:48:51.572Z: NODE_ENV: not set
+2025-02-19T04:48:51.573Z: URI format check started
+2025-02-19T04:48:51.573Z: URI format check started
+2025-02-19T04:48:51.574Z: Attempting to connect to MongoDB...
+2025-02-19T04:48:51.574Z: Attempting to connect to MongoDB...
+2025-02-19T04:48:51.594Z: Attempting to start server on port 7000
+2025-02-19T04:48:51.595Z: Attempting to start server on port 7000
+2025-02-19T04:48:51.599Z: Failed to start server: startPort is not defined
+2025-02-19T04:48:51.600Z: Failed to start server: startPort is not defined
+2025-02-19T04:49:14.285Z: Starting application...
+2025-02-19T04:49:14.287Z: Environment: undefined
+2025-02-19T04:49:14.288Z: Starting database connection...
+2025-02-19T04:49:14.288Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:49:14.289Z: NODE_ENV: not set
+2025-02-19T04:49:14.289Z: URI format check started
+2025-02-19T04:49:14.290Z: Attempting to connect to MongoDB...
+2025-02-19T04:49:14.306Z: Attempting to start server on port 7000
+2025-02-19T04:49:14.310Z: Failed to start server: startPort is not defined
+2025-02-19T04:49:52.307Z: Starting application...
+2025-02-19T04:49:52.308Z: Environment: undefined
+2025-02-19T04:49:52.309Z: Starting database connection...
+2025-02-19T04:49:52.309Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:49:52.309Z: Starting application...
+2025-02-19T04:49:52.310Z: NODE_ENV: not set
+2025-02-19T04:49:52.311Z: Environment: undefined
+2025-02-19T04:49:52.311Z: URI format check started
+2025-02-19T04:49:52.312Z: Attempting to connect to MongoDB...
+2025-02-19T04:49:52.312Z: Starting database connection...
+2025-02-19T04:49:52.313Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:49:52.313Z: NODE_ENV: not set
+2025-02-19T04:49:52.314Z: URI format check started
+2025-02-19T04:49:52.314Z: Attempting to connect to MongoDB...
+2025-02-19T04:49:52.338Z: Attempting to start server on port 7000
+2025-02-19T04:49:52.343Z: Attempting to start server on port 7000
+2025-02-19T04:49:52.352Z: Found available port: 7000
+2025-02-19T04:49:52.356Z: Server error encountered: listen EADDRINUSE: address already in use 0.0.0.0:7000
+2025-02-19T04:49:52.357Z: Found available port: 7000
+2025-02-19T04:49:52.357Z: Port 7000 is in use, trying another port...
+2025-02-19T04:49:52.358Z: Attempting to start server on port 7000
+2025-02-19T04:49:52.361Z: Found available port: 7000
+2025-02-19T04:49:52.362Z: Server error encountered: listen EADDRINUSE: address already in use 0.0.0.0:7000
+2025-02-19T04:49:52.363Z: Server is running on port 7000
+2025-02-19T04:49:52.362Z: Port 7000 is in use, trying another port...
+2025-02-19T04:49:52.364Z: Attempting to start server on port 7000
+2025-02-19T04:49:52.367Z: Found available port: 7001
+2025-02-19T04:49:52.369Z: Server is running on port 7001
+2025-02-19T04:49:52.371Z: Note: Original port 7000 was in use, using 7001 instead. Update your frontend API URL to: http://localhost:7001
+2025-02-19T04:49:53.868Z: MongoDB Connected to host: kalvi-shard-00-01.6sq9n.mongodb.net
+2025-02-19T04:49:53.908Z: Database connection is healthy - ping successful
+2025-02-19T04:49:53.909Z: Database connection successful
+2025-02-19T04:49:53.909Z: Attempting to start server on port 7000
+2025-02-19T04:49:53.912Z: Found available port: 7002
+2025-02-19T04:49:53.914Z: Server is running on port 7002
+2025-02-19T04:49:53.915Z: Note: Original port 7000 was in use, using 7002 instead. Update your frontend API URL to: http://localhost:7002
+2025-02-19T04:49:54.895Z: MongoDB Connected to host: kalvi-shard-00-01.6sq9n.mongodb.net
+2025-02-19T04:49:54.937Z: Database connection is healthy - ping successful
+2025-02-19T04:49:54.937Z: Database connection successful
+2025-02-19T04:49:54.938Z: Attempting to start server on port 7000
+2025-02-19T04:49:54.941Z: Found available port: 7003
+2025-02-19T04:49:54.943Z: Server is running on port 7003
+2025-02-19T04:49:54.944Z: Note: Original port 7000 was in use, using 7003 instead. Update your frontend API URL to: http://localhost:7003
+2025-02-19T04:50:08.866Z: Starting application...
+2025-02-19T04:50:08.867Z: Environment: undefined
+2025-02-19T04:50:08.868Z: Starting database connection...
+2025-02-19T04:50:08.868Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:50:08.869Z: NODE_ENV: not set
+2025-02-19T04:50:08.869Z: URI format check started
+2025-02-19T04:50:08.870Z: Attempting to connect to MongoDB...
+2025-02-19T04:50:08.886Z: Attempting to start server on port 7000
+2025-02-19T04:50:08.903Z: Found available port: 7004
+2025-02-19T04:50:08.906Z: Server is running on port 7004
+2025-02-19T04:50:08.907Z: Note: Original port 7000 was in use, using 7004 instead. Update your frontend API URL to: http://localhost:7004
+2025-02-19T04:50:10.353Z: MongoDB Connected to host: kalvi-shard-00-00.6sq9n.mongodb.net
+2025-02-19T04:50:10.400Z: Database connection is healthy - ping successful
+2025-02-19T04:50:10.401Z: Database connection successful
+2025-02-19T04:50:10.402Z: Attempting to start server on port 7000
+2025-02-19T04:50:10.406Z: Found available port: 7005
+2025-02-19T04:50:10.409Z: Server is running on port 7005
+2025-02-19T04:50:10.411Z: Note: Original port 7000 was in use, using 7005 instead. Update your frontend API URL to: http://localhost:7005
+2025-02-19T04:51:22.972Z: Starting application...
+2025-02-19T04:51:22.975Z: Environment: undefined
+2025-02-19T04:51:22.976Z: Starting database connection...
+2025-02-19T04:51:22.976Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:51:22.978Z: NODE_ENV: not set
+2025-02-19T04:51:22.978Z: URI format check started
+2025-02-19T04:51:22.981Z: Attempting to connect to MongoDB...
+2025-02-19T04:51:24.131Z: Starting application...
+2025-02-19T04:51:24.133Z: Environment: undefined
+2025-02-19T04:51:24.134Z: Starting database connection...
+2025-02-19T04:51:24.135Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:51:24.136Z: NODE_ENV: not set
+2025-02-19T04:51:24.136Z: URI format check started
+2025-02-19T04:51:24.137Z: Attempting to connect to MongoDB...
+2025-02-19T04:51:24.143Z: Starting application...
+2025-02-19T04:51:24.145Z: Environment: undefined
+2025-02-19T04:51:24.145Z: Starting database connection...
+2025-02-19T04:51:24.146Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:51:24.146Z: NODE_ENV: not set
+2025-02-19T04:51:24.147Z: URI format check started
+2025-02-19T04:51:24.148Z: Attempting to connect to MongoDB...
+2025-02-19T04:51:24.161Z: Attempting to start server on port 7000
+2025-02-19T04:51:24.169Z: Attempting to start server on port 7000
+2025-02-19T04:51:24.173Z: Found available port: 7000
+2025-02-19T04:51:24.177Z: Server is running on port 7000
+2025-02-19T04:51:24.181Z: Found available port: 7001
+2025-02-19T04:51:24.183Z: Server is running on port 7001
+2025-02-19T04:51:24.184Z: Note: Original port 7000 was in use, using 7001 instead. Update your frontend API URL to: http://localhost:7001
+2025-02-19T04:51:24.808Z: MongoDB Connected to host: kalvi-shard-00-02.6sq9n.mongodb.net
+2025-02-19T04:51:24.849Z: Database connection is healthy - ping successful
+2025-02-19T04:51:24.849Z: Database connection successful
+2025-02-19T04:51:24.850Z: Attempting to start server on port 7000
+2025-02-19T04:51:24.853Z: Found available port: 7002
+2025-02-19T04:51:24.856Z: Server is running on port 7002
+2025-02-19T04:51:24.857Z: Note: Original port 7000 was in use, using 7002 instead. Update your frontend API URL to: http://localhost:7002
+2025-02-19T04:51:24.859Z: MongoDB Connected to host: kalvi-shard-00-02.6sq9n.mongodb.net
+2025-02-19T04:51:24.914Z: Database connection is healthy - ping successful
+2025-02-19T04:51:24.915Z: Database connection successful
+2025-02-19T04:51:24.916Z: Attempting to start server on port 7000
+2025-02-19T04:51:24.919Z: Found available port: 7003
+2025-02-19T04:51:24.921Z: Server is running on port 7003
+2025-02-19T04:51:24.921Z: Note: Original port 7000 was in use, using 7003 instead. Update your frontend API URL to: http://localhost:7003
+2025-02-19T04:51:27.507Z: Login attempt started
+2025-02-19T04:51:27.508Z: Login request for email: chaitnay09pawar@gmail.com
+2025-02-19T04:51:27.508Z: Searching for user with email: chaitnay09pawar@gmail.com
+2025-02-19T04:51:27.554Z: Login failed: User not found
+2025-02-19T04:51:28.518Z: Login attempt started
+2025-02-19T04:51:28.519Z: Login request for email: chaitnay09pawar@gmail.com
+2025-02-19T04:51:28.519Z: Searching for user with email: chaitnay09pawar@gmail.com
+2025-02-19T04:51:28.569Z: Login failed: User not found
+2025-02-19T04:52:13.317Z: Starting application...
+2025-02-19T04:52:13.318Z: Environment: undefined
+2025-02-19T04:52:13.319Z: Starting database connection...
+2025-02-19T04:52:13.319Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:52:13.320Z: NODE_ENV: not set
+2025-02-19T04:52:13.320Z: URI format check started
+2025-02-19T04:52:13.321Z: Attempting to connect to MongoDB...
+2025-02-19T04:52:13.338Z: Attempting to start server on port 7000
+2025-02-19T04:52:13.350Z: Found available port: 7000
+2025-02-19T04:52:13.355Z: Server is running on port 7000
+2025-02-19T04:52:16.592Z: MongoDB Connected to host: kalvi-shard-00-00.6sq9n.mongodb.net
+2025-02-19T04:52:16.631Z: Database connection is healthy - ping successful
+2025-02-19T04:52:16.631Z: Database connection successful
+2025-02-19T04:52:16.631Z: Attempting to start server on port 7000
+2025-02-19T04:52:16.634Z: Found available port: 7002
+2025-02-19T04:52:16.636Z: Server is running on port 7002
+2025-02-19T04:52:16.637Z: Note: Original port 7000 was in use, using 7002 instead. Update your frontend API URL to: http://localhost:7002
+2025-02-19T04:53:00.651Z: Starting application...
+2025-02-19T04:53:00.653Z: Environment: undefined
+2025-02-19T04:53:00.653Z: Starting database connection...
+2025-02-19T04:53:00.654Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:53:00.654Z: NODE_ENV: not set
+2025-02-19T04:53:00.655Z: URI format check started
+2025-02-19T04:53:00.655Z: Attempting to connect to MongoDB...
+2025-02-19T04:53:00.677Z: Attempting to start server on port 7000
+2025-02-19T04:53:00.691Z: Found available port: 7000
+2025-02-19T04:53:00.696Z: Server is running on port 7000
+2025-02-19T04:53:01.772Z: Starting application...
+2025-02-19T04:53:01.774Z: Environment: undefined
+2025-02-19T04:53:01.774Z: Starting database connection...
+2025-02-19T04:53:01.775Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:53:01.775Z: NODE_ENV: not set
+2025-02-19T04:53:01.778Z: URI format check started
+2025-02-19T04:53:01.778Z: Attempting to connect to MongoDB...
+2025-02-19T04:53:01.800Z: Attempting to start server on port 7000
+2025-02-19T04:53:01.818Z: Found available port: 7000
+2025-02-19T04:53:01.823Z: Server is running on port 7000
+2025-02-19T04:53:04.517Z: MongoDB Connected to host: kalvi-shard-00-01.6sq9n.mongodb.net
+2025-02-19T04:53:04.559Z: Database connection is healthy - ping successful
+2025-02-19T04:53:04.560Z: Database connection successful
+2025-02-19T04:53:04.561Z: Attempting to start server on port 7000
+2025-02-19T04:53:04.563Z: Found available port: 7001
+2025-02-19T04:53:04.565Z: Server is running on port 7001
+2025-02-19T04:53:04.565Z: Note: Original port 7000 was in use, using 7001 instead. Update your frontend API URL to: http://localhost:7001
+2025-02-19T04:53:40.561Z: Starting application...
+2025-02-19T04:53:40.562Z: Environment: undefined
+2025-02-19T04:53:40.563Z: Starting database connection...
+2025-02-19T04:53:40.564Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:53:40.564Z: NODE_ENV: not set
+2025-02-19T04:53:40.565Z: URI format check started
+2025-02-19T04:53:40.565Z: Attempting to connect to MongoDB...
+2025-02-19T04:53:40.581Z: Attempting to start server on port 7000
+2025-02-19T04:53:40.596Z: Found available port: 7002
+2025-02-19T04:53:40.598Z: Server is running on port 7002
+2025-02-19T04:53:40.599Z: Note: Original port 7000 was in use, using 7002 instead. Update your frontend API URL to: http://localhost:7002
+2025-02-19T04:53:41.181Z: MongoDB Connected to host: kalvi-shard-00-00.6sq9n.mongodb.net
+2025-02-19T04:53:41.220Z: Database connection is healthy - ping successful
+2025-02-19T04:53:41.221Z: Database connection successful
+2025-02-19T04:53:41.222Z: Attempting to start server on port 7000
+2025-02-19T04:53:41.225Z: Found available port: 7003
+2025-02-19T04:53:41.227Z: Server is running on port 7003
+2025-02-19T04:53:41.228Z: Note: Original port 7000 was in use, using 7003 instead. Update your frontend API URL to: http://localhost:7003
+2025-02-19T04:56:21.141Z: Starting application...
+2025-02-19T04:56:21.142Z: Environment: undefined
+2025-02-19T04:56:21.143Z: Starting database connection...
+2025-02-19T04:56:21.144Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T04:56:21.144Z: NODE_ENV: not set
+2025-02-19T04:56:21.145Z: URI format check started
+2025-02-19T04:56:21.145Z: Attempting to connect to MongoDB...
+2025-02-19T04:56:21.162Z: Attempting to start server on port 7000
+2025-02-19T04:56:21.177Z: Found available port: 7002
+2025-02-19T04:56:21.179Z: Server is running on port 7002
+2025-02-19T04:56:21.180Z: Note: Original port 7000 was in use, using 7002 instead. Update your frontend API URL to: http://localhost:7002
+2025-02-19T04:56:21.937Z: MongoDB Connected to host: kalvi-shard-00-00.6sq9n.mongodb.net
+2025-02-19T04:56:21.980Z: Database connection is healthy - ping successful
+2025-02-19T04:56:21.980Z: Database connection successful
+2025-02-19T04:56:21.981Z: Attempting to start server on port 7000
+2025-02-19T04:56:21.984Z: Found available port: 7003
+2025-02-19T04:56:21.985Z: Server is running on port 7003
+2025-02-19T04:56:21.986Z: Note: Original port 7000 was in use, using 7003 instead. Update your frontend API URL to: http://localhost:7003
+2025-02-19T05:02:14.102Z: Login attempt started
+2025-02-19T05:02:14.102Z: Login request for email: chaitanya09pawar@gmail.com
+2025-02-19T05:02:14.103Z: Searching for user with email: chaitanya09pawar@gmail.com
+2025-02-19T05:02:14.142Z: Total users in database: 1
+2025-02-19T05:02:14.143Z: Existing user emails:
+2025-02-19T05:02:14.180Z: User found, comparing passwords
+2025-02-19T05:02:14.297Z: Password match successful
+2025-02-19T05:05:15.180Z: Starting application...
+2025-02-19T05:05:15.182Z: Environment: undefined
+2025-02-19T05:05:15.183Z: Starting database connection...
+2025-02-19T05:05:15.183Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T05:05:15.184Z: NODE_ENV: not set
+2025-02-19T05:05:15.184Z: URI format check started
+2025-02-19T05:05:15.184Z: Attempting to connect to MongoDB...
+2025-02-19T05:05:15.204Z: Attempting to start server on port 7000
+2025-02-19T05:05:15.219Z: Found available port: 7004
+2025-02-19T05:05:15.221Z: Server is running on port 7004
+2025-02-19T05:05:15.222Z: Note: Original port 7000 was in use, using 7004 instead. Update your frontend API URL to: http://localhost:7004
+2025-02-19T05:05:15.790Z: MongoDB Connected to host: kalvi-shard-00-00.6sq9n.mongodb.net
+2025-02-19T05:05:15.828Z: Database connection is healthy - ping successful
+2025-02-19T05:05:15.829Z: Database connection successful
+2025-02-19T05:05:15.829Z: Attempting to start server on port 7000
+2025-02-19T05:05:15.833Z: Found available port: 7005
+2025-02-19T05:05:15.835Z: Server is running on port 7005
+2025-02-19T05:05:15.835Z: Note: Original port 7000 was in use, using 7005 instead. Update your frontend API URL to: http://localhost:7005
+2025-02-19T05:06:05.253Z: Login attempt started
+2025-02-19T05:06:05.254Z: Login request for email: chiakfosno@gmail.com
+2025-02-19T05:06:05.254Z: Searching for user with email: chiakfosno@gmail.com
+2025-02-19T05:06:05.292Z: Total users in database: 1
+2025-02-19T05:06:05.293Z: Existing user emails:
+2025-02-19T05:06:05.329Z: Login failed: User not found
+2025-02-19T05:06:05.330Z: Please register first if you are a new user
+2025-02-19T05:07:32.245Z: Starting application...
+2025-02-19T05:07:32.246Z: Environment: undefined
+2025-02-19T05:07:32.247Z: Starting database connection...
+2025-02-19T05:07:32.247Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T05:07:32.248Z: NODE_ENV: not set
+2025-02-19T05:07:32.249Z: URI format check started
+2025-02-19T05:07:32.249Z: Attempting to connect to MongoDB...
+2025-02-19T05:07:32.264Z: Attempting to start server on port 7000
+2025-02-19T05:07:32.278Z: Found available port: 7000
+2025-02-19T05:07:32.281Z: Server is running on port 7000
+2025-02-19T05:07:32.928Z: MongoDB Connected to host: kalvi-shard-00-00.6sq9n.mongodb.net
+2025-02-19T05:07:33.018Z: Database connection is healthy - ping successful
+2025-02-19T05:07:33.019Z: Database connection successful
+2025-02-19T05:07:33.019Z: Attempting to start server on port 7000
+2025-02-19T05:07:33.022Z: Found available port: 7001
+2025-02-19T05:07:33.023Z: Server is running on port 7001
+2025-02-19T05:07:33.024Z: Note: Original port 7000 was in use, using 7001 instead. Update your frontend API URL to: http://localhost:7001
+2025-02-19T05:11:19.073Z: Login attempt started
+2025-02-19T05:11:19.073Z: Login request for email: chaitanya09pawar@gmail.com
+2025-02-19T05:11:19.074Z: Searching for user with email: chaitanya09pawar@gmail.com
+2025-02-19T05:11:19.113Z: Total users in database: 1
+2025-02-19T05:11:19.114Z: Existing user emails:
+2025-02-19T05:11:19.166Z: User found, comparing passwords
+2025-02-19T05:11:19.313Z: Password match successful
+2025-02-19T05:13:27.496Z: Login attempt started
+2025-02-19T05:13:27.496Z: Login request for email: chaitanya09pawar@gmail.com
+2025-02-19T05:13:27.498Z: Searching for user with email: chaitanya09pawar@gmail.com
+2025-02-19T05:13:27.545Z: Total users in database: 1
+2025-02-19T05:13:27.546Z: Existing user emails:
+2025-02-19T05:13:27.599Z: User found, comparing passwords
+2025-02-19T05:13:27.703Z: Login failed: Password mismatch
+2025-02-19T05:20:59.237Z: Login attempt started
+2025-02-19T05:20:59.238Z: Login request for email: chaitanya@gmail.come
+2025-02-19T05:20:59.239Z: Searching for user with email: chaitanya@gmail.come
+2025-02-19T05:21:07.756Z: Login attempt started
+2025-02-19T05:21:07.757Z: Login request for email: chaitanya@gmail.com
+2025-02-19T05:21:07.759Z: Searching for user with email: chaitanya@gmail.com
+2025-02-19T05:21:14.665Z: Login attempt started
+2025-02-19T05:21:14.666Z: Login request for email: chaitanya@gmail.com
+2025-02-19T05:21:14.667Z: Searching for user with email: chaitanya@gmail.com
+2025-02-19T05:21:22.201Z: Login attempt started
+2025-02-19T05:21:22.202Z: Login request for email: chaitanya@gmail.com
+2025-02-19T05:21:22.202Z: Searching for user with email: chaitanya@gmail.com
+2025-02-19T05:25:19.081Z: Starting application...
+2025-02-19T05:25:19.083Z: Environment: undefined
+2025-02-19T05:25:19.083Z: Starting database connection...
+2025-02-19T05:25:19.084Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T05:25:19.084Z: NODE_ENV: not set
+2025-02-19T05:25:19.085Z: URI format check started
+2025-02-19T05:25:19.085Z: Attempting to connect to MongoDB...
+2025-02-19T05:25:19.099Z: Attempting to start server on port 7000
+2025-02-19T05:25:19.112Z: Found available port: 7000
+2025-02-19T05:25:19.116Z: Server is running on port 7000
+2025-02-19T05:25:22.466Z: MongoDB Connected to host: kalvi-shard-00-01.6sq9n.mongodb.net
+2025-02-19T05:25:22.541Z: Database connection is healthy - ping successful
+2025-02-19T05:25:22.541Z: Database connection successful
+2025-02-19T05:25:22.542Z: Attempting to start server on port 7000
+2025-02-19T05:25:22.545Z: Found available port: 7001
+2025-02-19T05:25:22.547Z: Server is running on port 7001
+2025-02-19T05:25:22.548Z: Note: Original port 7000 was in use, using 7001 instead. Update your frontend API URL to: http://localhost:7001
+2025-02-19T05:28:17.384Z: Starting application...
+2025-02-19T05:28:17.386Z: Environment: undefined
+2025-02-19T05:28:17.387Z: Starting database connection...
+2025-02-19T05:28:17.387Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T05:28:17.388Z: NODE_ENV: not set
+2025-02-19T05:28:17.388Z: URI format check started
+2025-02-19T05:28:17.389Z: Attempting to connect to MongoDB...
+2025-02-19T05:28:17.409Z: Attempting to start server on port 7000
+2025-02-19T05:28:17.425Z: Found available port: 7002
+2025-02-19T05:28:17.427Z: Server is running on port 7002
+2025-02-19T05:28:17.428Z: Note: Original port 7000 was in use, using 7002 instead. Update your frontend API URL to: http://localhost:7002
+2025-02-19T05:28:18.990Z: MongoDB Connected to host: kalvi-shard-00-00.6sq9n.mongodb.net
+2025-02-19T05:28:19.030Z: Database connection is healthy - ping successful
+2025-02-19T05:28:19.030Z: Database connection successful
+2025-02-19T05:28:19.031Z: Attempting to start server on port 7000
+2025-02-19T05:28:19.033Z: Found available port: 7003
+2025-02-19T05:28:19.035Z: Server is running on port 7003
+2025-02-19T05:28:19.036Z: Note: Original port 7000 was in use, using 7003 instead. Update your frontend API URL to: http://localhost:7003
+2025-02-19T06:01:31.552Z: Starting application...
+2025-02-19T06:01:31.553Z: Environment: undefined
+2025-02-19T06:01:31.554Z: Starting database connection...
+2025-02-19T06:01:31.554Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T06:01:31.555Z: NODE_ENV: not set
+2025-02-19T06:01:31.556Z: URI format check started
+2025-02-19T06:01:31.556Z: Attempting to connect to MongoDB...
+2025-02-19T06:01:31.571Z: Attempting to start server on port 7000
+2025-02-19T06:01:31.586Z: Found available port: 7002
+2025-02-19T06:01:31.588Z: Server is running on port 7002
+2025-02-19T06:01:31.588Z: Note: Original port 7000 was in use, using 7002 instead. Update your frontend API URL to: http://localhost:7002
+2025-02-19T06:01:32.151Z: MongoDB Connected to host: kalvi-shard-00-02.6sq9n.mongodb.net
+2025-02-19T06:01:32.202Z: Database connection is healthy - ping successful
+2025-02-19T06:01:32.203Z: Database connection successful
+2025-02-19T06:01:32.203Z: Attempting to start server on port 7000
+2025-02-19T06:01:32.206Z: Found available port: 7003
+2025-02-19T06:01:32.207Z: Server is running on port 7003
+2025-02-19T06:01:32.208Z: Note: Original port 7000 was in use, using 7003 instead. Update your frontend API URL to: http://localhost:7003
+2025-02-19T06:02:59.836Z: Starting application...
+2025-02-19T06:02:59.837Z: Environment: undefined
+2025-02-19T06:02:59.838Z: Starting database connection...
+2025-02-19T06:02:59.839Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T06:02:59.839Z: NODE_ENV: not set
+2025-02-19T06:02:59.840Z: URI format check started
+2025-02-19T06:02:59.840Z: Attempting to connect to MongoDB...
+2025-02-19T06:02:59.855Z: Attempting to start server on port 7000
+2025-02-19T06:02:59.866Z: Found available port: 7000
+2025-02-19T06:02:59.871Z: Server is running on port 7000
+2025-02-19T06:03:00.637Z: MongoDB Connected to host: kalvi-shard-00-02.6sq9n.mongodb.net
+2025-02-19T06:03:00.675Z: Database connection is healthy - ping successful
+2025-02-19T06:03:00.676Z: Database connection successful
+2025-02-19T06:03:00.677Z: Attempting to start server on port 7000
+2025-02-19T06:03:00.679Z: Found available port: 7001
+2025-02-19T06:03:00.681Z: Server is running on port 7001
+2025-02-19T06:03:00.681Z: Note: Original port 7000 was in use, using 7001 instead. Update your frontend API URL to: http://localhost:7001
+2025-02-19T06:03:54.810Z: Starting application...
+2025-02-19T06:03:54.811Z: Environment: undefined
+2025-02-19T06:03:54.812Z: Starting database connection...
+2025-02-19T06:03:54.813Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T06:03:54.813Z: NODE_ENV: not set
+2025-02-19T06:03:54.814Z: URI format check started
+2025-02-19T06:03:54.815Z: Attempting to connect to MongoDB...
+2025-02-19T06:03:54.835Z: Attempting to start server on port 7000
+2025-02-19T06:03:54.851Z: Found available port: 7002
+2025-02-19T06:03:54.855Z: Server is running on port 7002
+2025-02-19T06:03:54.861Z: Note: Original port 7000 was in use, using 7002 instead. Update your frontend API URL to: http://localhost:7002
+2025-02-19T06:03:55.417Z: MongoDB Connected to host: kalvi-shard-00-00.6sq9n.mongodb.net
+2025-02-19T06:03:55.456Z: Database connection is healthy - ping successful
+2025-02-19T06:03:55.457Z: Database connection successful
+2025-02-19T06:03:55.458Z: Attempting to start server on port 7000
+2025-02-19T06:03:55.461Z: Found available port: 7003
+2025-02-19T06:03:55.463Z: Server is running on port 7003
+2025-02-19T06:03:55.463Z: Note: Original port 7000 was in use, using 7003 instead. Update your frontend API URL to: http://localhost:7003
+2025-02-19T06:11:19.620Z: Starting application...
+2025-02-19T06:11:19.622Z: Environment: undefined
+2025-02-19T06:11:19.622Z: Starting database connection...
+2025-02-19T06:11:19.623Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T06:11:19.623Z: NODE_ENV: not set
+2025-02-19T06:11:19.624Z: URI format check started
+2025-02-19T06:11:19.624Z: Attempting to connect to MongoDB...
+2025-02-19T06:11:19.641Z: Attempting to start server on port 7000
+2025-02-19T06:11:19.655Z: Found available port: 7002
+2025-02-19T06:11:19.657Z: Server is running on port 7002
+2025-02-19T06:11:19.658Z: Note: Original port 7000 was in use, using 7002 instead. Update your frontend API URL to: http://localhost:7002
+2025-02-19T06:11:21.613Z: MongoDB Connected to host: kalvi-shard-00-00.6sq9n.mongodb.net
+2025-02-19T06:11:21.654Z: Database connection is healthy - ping successful
+2025-02-19T06:11:21.656Z: Database connection successful
+2025-02-19T06:11:21.656Z: Attempting to start server on port 7000
+2025-02-19T06:11:21.659Z: Found available port: 7003
+2025-02-19T06:11:21.660Z: Server is running on port 7003
+2025-02-19T06:11:21.661Z: Note: Original port 7000 was in use, using 7003 instead. Update your frontend API URL to: http://localhost:7003
+2025-02-19T06:21:06.575Z: Starting application...
+2025-02-19T06:21:06.576Z: Environment: undefined
+2025-02-19T06:21:06.577Z: Starting database connection...
+2025-02-19T06:21:06.578Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T06:21:06.578Z: NODE_ENV: not set
+2025-02-19T06:21:06.579Z: URI format check started
+2025-02-19T06:21:06.580Z: Attempting to connect to MongoDB...
+2025-02-19T06:21:06.598Z: Attempting to start server on port 7000
+2025-02-19T06:21:06.609Z: Found available port: 7000
+2025-02-19T06:21:06.613Z: Server is running on port 7000
+2025-02-19T06:21:07.186Z: MongoDB Connected to host: kalvi-shard-00-00.6sq9n.mongodb.net
+2025-02-19T06:21:07.226Z: Database connection is healthy - ping successful
+2025-02-19T06:21:07.226Z: Database connection successful
+2025-02-19T06:21:07.227Z: Attempting to start server on port 7000
+2025-02-19T06:21:07.230Z: Found available port: 7001
+2025-02-19T06:21:07.231Z: Server is running on port 7001
+2025-02-19T06:21:07.233Z: Note: Original port 7000 was in use, using 7001 instead. Update your frontend API URL to: http://localhost:7001
+2025-02-19T06:22:21.978Z: Starting application...
+2025-02-19T06:22:21.980Z: Environment: undefined
+2025-02-19T06:22:21.981Z: Starting database connection...
+2025-02-19T06:22:21.981Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T06:22:21.982Z: NODE_ENV: not set
+2025-02-19T06:22:21.982Z: URI format check started
+2025-02-19T06:22:21.983Z: Attempting to connect to MongoDB...
+2025-02-19T06:22:22.002Z: Attempting to start server on port 7000
+2025-02-19T06:22:22.016Z: Found available port: 7002
+2025-02-19T06:22:22.018Z: Server is running on port 7002
+2025-02-19T06:22:22.020Z: Note: Original port 7000 was in use, using 7002 instead. Update your frontend API URL to: http://localhost:7002
+2025-02-19T06:22:27.867Z: MongoDB Connected to host: kalvi-shard-00-01.6sq9n.mongodb.net
+2025-02-19T06:22:27.909Z: Database connection is healthy - ping successful
+2025-02-19T06:22:27.910Z: Database connection successful
+2025-02-19T06:22:27.911Z: Attempting to start server on port 7000
+2025-02-19T06:22:27.913Z: Found available port: 7003
+2025-02-19T06:22:27.915Z: Server is running on port 7003
+2025-02-19T06:22:27.916Z: Note: Original port 7000 was in use, using 7003 instead. Update your frontend API URL to: http://localhost:7003
+2025-02-19T06:22:31.593Z: Login attempt started
+2025-02-19T06:22:31.593Z: Login request for email: chaitanya09pawar@gamil.com
+2025-02-19T06:22:31.594Z: Searching for user with email: chaitanya09pawar@gamil.com
+2025-02-19T06:22:31.640Z: Total users in database: 0
+2025-02-19T06:22:31.681Z: Login failed: User not found
+2025-02-19T06:22:31.682Z: Please register first if you are a new user
+2025-02-19T06:33:26.664Z: Starting application...
+2025-02-19T06:33:26.666Z: Environment: undefined
+2025-02-19T06:33:26.813Z: Starting database connection...
+2025-02-19T06:33:26.814Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T06:33:26.814Z: NODE_ENV: not set
+2025-02-19T06:33:26.814Z: URI format check started
+2025-02-19T06:33:26.816Z: Attempting to connect to MongoDB...
+2025-02-19T06:33:27.439Z: MongoDB Connected to host: kalvi-shard-00-02.6sq9n.mongodb.net
+2025-02-19T06:33:27.477Z: Database connection is healthy - ping successful
+2025-02-19T06:33:27.478Z: Database connection successful
+2025-02-19T06:33:27.481Z: Found available port: 7000
+2025-02-19T06:33:27.483Z: Server is running on port 7000
+2025-02-19T06:34:24.608Z: Starting application...
+2025-02-19T06:34:24.611Z: Environment: undefined
+2025-02-19T06:34:24.791Z: Starting database connection...
+2025-02-19T06:34:24.792Z: Environment: not set
+2025-02-19T06:34:24.792Z: MongoDB URI validation successful
+2025-02-19T06:34:24.794Z: Attempting to connect to MongoDB...
+2025-02-19T06:34:25.576Z: Mongoose connection established
+2025-02-19T06:34:25.579Z: MongoDB Connected to host: kalvi-shard-00-00.6sq9n.mongodb.net
+2025-02-19T06:34:25.616Z: Database connection is healthy - ping successful
+2025-02-19T06:34:25.616Z: Database connection successful
+2025-02-19T06:34:25.621Z: Found available port: 7000
+2025-02-19T06:34:25.624Z: Server is running on port 7000
+2025-02-19T06:35:36.243Z: Starting application...
+2025-02-19T06:35:36.245Z: Environment: undefined
+2025-02-19T06:35:36.396Z: Starting database connection...
+2025-02-19T06:35:36.396Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T06:35:36.397Z: NODE_ENV: not set
+2025-02-19T06:35:36.398Z: URI format check started
+2025-02-19T06:35:36.399Z: Attempting to connect to MongoDB...
+2025-02-19T06:35:37.095Z: MongoDB Connected to host: kalvi-shard-00-00.6sq9n.mongodb.net
+2025-02-19T06:35:37.134Z: Database connection is healthy - ping successful
+2025-02-19T06:35:37.134Z: Database connection successful
+2025-02-19T06:35:37.140Z: Found available port: 7000
+2025-02-19T06:35:37.142Z: Server is running on port 7000
+2025-02-19T06:35:50.438Z: Starting application...
+2025-02-19T06:35:50.439Z: Environment: undefined
+2025-02-19T06:35:50.440Z: Starting database connection...
+2025-02-19T06:35:50.441Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T06:35:50.441Z: NODE_ENV: not set
+2025-02-19T06:35:50.442Z: URI format check started
+2025-02-19T06:35:50.442Z: Attempting to connect to MongoDB...
+2025-02-19T06:35:50.462Z: Attempting to start server on port 7000
+2025-02-19T06:35:50.475Z: Found available port: 7000
+2025-02-19T06:35:50.479Z: Server is running on port 7000
+2025-02-19T06:35:55.017Z: MongoDB Connected to host: kalvi-shard-00-02.6sq9n.mongodb.net
+2025-02-19T06:35:55.058Z: Database connection is healthy - ping successful
+2025-02-19T06:35:55.058Z: Database connection successful
+2025-02-19T06:35:55.059Z: Attempting to start server on port 7000
+2025-02-19T06:35:55.063Z: Found available port: 7001
+2025-02-19T06:35:55.064Z: Server is running on port 7001
+2025-02-19T06:35:55.065Z: Note: Original port 7000 was in use, using 7001 instead. Update your frontend API URL to: http://localhost:7001
+2025-02-19T06:36:11.110Z: Starting application...
+2025-02-19T06:36:11.111Z: Environment: undefined
+2025-02-19T06:36:11.112Z: Starting database connection...
+2025-02-19T06:36:11.112Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T06:36:11.113Z: NODE_ENV: not set
+2025-02-19T06:36:11.114Z: URI format check started
+2025-02-19T06:36:11.115Z: Attempting to connect to MongoDB...
+2025-02-19T06:36:11.136Z: Attempting to start server on port 7000
+2025-02-19T06:36:11.154Z: Found available port: 7002
+2025-02-19T06:36:11.157Z: Server is running on port 7002
+2025-02-19T06:36:11.159Z: Note: Original port 7000 was in use, using 7002 instead. Update your frontend API URL to: http://localhost:7002
+2025-02-19T06:36:11.711Z: MongoDB Connected to host: kalvi-shard-00-00.6sq9n.mongodb.net
+2025-02-19T06:36:11.750Z: Database connection is healthy - ping successful
+2025-02-19T06:36:11.751Z: Database connection successful
+2025-02-19T06:36:11.753Z: Attempting to start server on port 7000
+2025-02-19T06:36:11.756Z: Found available port: 7003
+2025-02-19T06:36:11.758Z: Server is running on port 7003
+2025-02-19T06:36:11.759Z: Note: Original port 7000 was in use, using 7003 instead. Update your frontend API URL to: http://localhost:7003
+2025-02-19T06:37:36.772Z: Starting application...
+2025-02-19T06:37:36.774Z: Environment: undefined
+2025-02-19T06:37:36.775Z: Starting database connection...
+2025-02-19T06:37:36.775Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T06:37:36.777Z: NODE_ENV: not set
+2025-02-19T06:37:36.778Z: URI format check started
+2025-02-19T06:37:36.781Z: Attempting to connect to MongoDB...
+2025-02-19T06:37:36.806Z: Attempting to start server on port 7000
+2025-02-19T06:37:36.817Z: Found available port: 7000
+2025-02-19T06:37:36.821Z: Server is running on port 7000
+2025-02-19T06:37:36.829Z: Starting application...
+2025-02-19T06:37:36.831Z: Environment: undefined
+2025-02-19T06:37:36.832Z: Starting database connection...
+2025-02-19T06:37:36.833Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T06:37:36.834Z: NODE_ENV: not set
+2025-02-19T06:37:36.834Z: URI format check started
+2025-02-19T06:37:36.835Z: Attempting to connect to MongoDB...
+2025-02-19T06:37:36.853Z: Attempting to start server on port 7000
+2025-02-19T06:37:36.864Z: Found available port: 7001
+2025-02-19T06:37:36.866Z: Server is running on port 7001
+2025-02-19T06:37:36.868Z: Note: Original port 7000 was in use, using 7001 instead. Update your frontend API URL to: http://localhost:7001
+2025-02-19T06:37:38.134Z: MongoDB Connected to host: kalvi-shard-00-02.6sq9n.mongodb.net
+2025-02-19T06:37:38.134Z: MongoDB Connected to host: kalvi-shard-00-02.6sq9n.mongodb.net
+2025-02-19T06:37:38.174Z: Database connection is healthy - ping successful
+2025-02-19T06:37:38.174Z: Database connection is healthy - ping successful
+2025-02-19T06:37:38.175Z: Database connection successful
+2025-02-19T06:37:38.175Z: Database connection successful
+2025-02-19T06:37:38.176Z: Attempting to start server on port 7000
+2025-02-19T06:37:38.176Z: Attempting to start server on port 7000
+2025-02-19T06:37:38.179Z: Found available port: 7002
+2025-02-19T06:37:38.181Z: Server error encountered: listen EADDRINUSE: address already in use 0.0.0.0:7002
+2025-02-19T06:37:38.182Z: Found available port: 7002
+2025-02-19T06:37:38.182Z: Port 7002 is in use, trying another port...
+2025-02-19T06:37:38.183Z: Attempting to start server on port 7000
+2025-02-19T06:37:38.184Z: Server is running on port 7002
+2025-02-19T06:37:38.185Z: Note: Original port 7000 was in use, using 7002 instead. Update your frontend API URL to: http://localhost:7002
+2025-02-19T06:37:38.186Z: Found available port: 7003
+2025-02-19T06:37:38.188Z: Server is running on port 7003
+2025-02-19T06:37:38.189Z: Note: Original port 7000 was in use, using 7003 instead. Update your frontend API URL to: http://localhost:7003
+2025-02-19T07:57:12.995Z: Starting application...
+2025-02-19T07:57:12.997Z: Environment: undefined
+2025-02-19T07:57:12.997Z: Starting database connection...
+2025-02-19T07:57:12.998Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T07:57:12.998Z: NODE_ENV: not set
+2025-02-19T07:57:12.999Z: URI format check started
+2025-02-19T07:57:12.999Z: Attempting to connect to MongoDB...
+2025-02-19T07:57:13.017Z: Attempting to start server on port 42069
+2025-02-19T07:57:13.027Z: Found available port: 42069
+2025-02-19T07:57:13.030Z: Server is running on port 42069
+2025-02-19T07:57:16.971Z: MongoDB Connected to host: kalvi-shard-00-01.6sq9n.mongodb.net
+2025-02-19T07:57:17.019Z: Database connection is healthy - ping successful
+2025-02-19T07:57:17.020Z: Database connection successful
+2025-02-19T07:57:17.020Z: Attempting to start server on port 42069
+2025-02-19T07:57:17.024Z: Found available port: 42070
+2025-02-19T07:57:17.025Z: Server is running on port 42070
+2025-02-19T07:57:17.026Z: Note: Original port 42069 was in use, using 42070 instead. Update your frontend API URL to: http://localhost:42070
+2025-02-19T11:07:08.399Z: Starting database connection...
+2025-02-19T11:07:08.401Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T11:07:08.401Z: NODE_ENV: not set
+2025-02-19T11:07:08.402Z: URI format check started
+2025-02-19T11:07:08.402Z: Attempting to connect to MongoDB...
+2025-02-19T11:07:08.411Z: Starting database connection...
+2025-02-19T11:07:08.413Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T11:07:08.413Z: NODE_ENV: not set
+2025-02-19T11:07:08.414Z: URI format check started
+2025-02-19T11:07:08.415Z: Attempting to connect to MongoDB...
+2025-02-19T11:07:11.943Z: MongoDB Connected to host: kalvi-shard-00-00.6sq9n.mongodb.net
+2025-02-19T11:07:11.950Z: MongoDB Connected to host: kalvi-shard-00-00.6sq9n.mongodb.net
+2025-02-19T11:07:11.994Z: Database connection is healthy - ping successful
+2025-02-19T11:07:12.000Z: Database connection is healthy - ping successful
+2025-02-19T11:07:51.349Z: Starting database connection...
+2025-02-19T11:07:51.351Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T11:07:51.351Z: NODE_ENV: not set
+2025-02-19T11:07:51.351Z: Attempting to connect to MongoDB...
+2025-02-19T11:07:51.351Z: URI format check started
+2025-02-19T11:07:51.648Z: Starting database connection...
+2025-02-19T11:07:51.650Z: MONGODB_URI: mongodb+srv://chaitanya09pawar:chaz@kalvi.6sq9n.mongodb.net/follow-along
+2025-02-19T11:07:51.650Z: NODE_ENV: not set
+2025-02-19T11:07:51.650Z: URI format check started
+2025-02-19T11:07:51.650Z: Attempting to connect to MongoDB...
+2025-02-19T11:07:52.662Z: MongoDB Connected to host: kalvi-shard-00-02.6sq9n.mongodb.net
+2025-02-19T11:07:52.670Z: MongoDB Connected to host: kalvi-shard-00-02.6sq9n.mongodb.net
+2025-02-19T11:07:52.711Z: Database connection is healthy - ping successful

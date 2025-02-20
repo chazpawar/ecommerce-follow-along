@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { AlertCircle, PlusCircle, Edit2, Trash2 } from 'lucide-react';
+import { AlertCircle, PlusCircle, Trash2 } from 'lucide-react';
 
 const Profile = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [showAddressForm, setShowAddressForm] = useState(false);
-  const [addressFormData, setAddressFormData] = useState({
-    street: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    country: ''
-  });
 
   useEffect(() => {
     fetchUserData();
@@ -42,35 +36,6 @@ const Profile = () => {
     } catch (error) {
       setError(error.response?.data?.message || 'Error fetching user data');
       setLoading(false);
-    }
-  };
-
-  const handleAddressSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const token = localStorage.getItem('token');
-      const userId = localStorage.getItem('userId');
-
-      await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/users/${userId}/address`,
-        addressFormData,
-        {
-          headers: { Authorization: `Bearer ${token}` }
-        }
-      );
-
-      // Refresh user data
-      await fetchUserData();
-      setShowAddressForm(false);
-      setAddressFormData({
-        street: '',
-        city: '',
-        state: '',
-        zipCode: '',
-        country: ''
-      });
-    } catch (error) {
-      setError(error.response?.data?.message || 'Error adding address');
     }
   };
 
@@ -143,98 +108,13 @@ const Profile = () => {
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-semibold">Addresses</h2>
             <button
-              onClick={() => setShowAddressForm(true)}
+              onClick={() => navigate('/add-address')}
               className="flex items-center space-x-2 text-blue-600 hover:text-blue-800"
             >
               <PlusCircle className="h-5 w-5" />
               <span>Add Address</span>
             </button>
           </div>
-
-          {/* Address Form */}
-          {showAddressForm && (
-            <form onSubmit={handleAddressSubmit} className="mb-6 space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Street
-                </label>
-                <input
-                  type="text"
-                  value={addressFormData.street}
-                  onChange={(e) => setAddressFormData({ ...addressFormData, street: e.target.value })}
-                  className="block w-full px-4 py-2 border border-gray-300 rounded-md"
-                  required
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    City
-                  </label>
-                  <input
-                    type="text"
-                    value={addressFormData.city}
-                    onChange={(e) => setAddressFormData({ ...addressFormData, city: e.target.value })}
-                    className="block w-full px-4 py-2 border border-gray-300 rounded-md"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    State
-                  </label>
-                  <input
-                    type="text"
-                    value={addressFormData.state}
-                    onChange={(e) => setAddressFormData({ ...addressFormData, state: e.target.value })}
-                    className="block w-full px-4 py-2 border border-gray-300 rounded-md"
-                    required
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    ZIP Code
-                  </label>
-                  <input
-                    type="text"
-                    value={addressFormData.zipCode}
-                    onChange={(e) => setAddressFormData({ ...addressFormData, zipCode: e.target.value })}
-                    className="block w-full px-4 py-2 border border-gray-300 rounded-md"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Country
-                  </label>
-                  <input
-                    type="text"
-                    value={addressFormData.country}
-                    onChange={(e) => setAddressFormData({ ...addressFormData, country: e.target.value })}
-                    className="block w-full px-4 py-2 border border-gray-300 rounded-md"
-                    required
-                  />
-                </div>
-              </div>
-              <div className="flex space-x-4">
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800"
-                >
-                  Add Address
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowAddressForm(false)}
-                  className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          )}
 
           {/* Address List */}
           {user?.addresses?.length > 0 ? (

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, AlertCircle } from 'lucide-react';
+import axios from 'axios';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -36,21 +37,119 @@ const Login = () => {
     if (!validateForm()) return;
     
     setIsLoading(true);
+    const debug = import.meta.env.VITE_DEBUG === 'true';
+    
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      localStorage.setItem('userEmail', email);
-      
-      if (rememberMe) {
-        localStorage.setItem('rememberedEmail', email);
-      } else {
-        localStorage.removeItem('rememberedEmail');
+      if (debug) {
+        console.log('Login attempt details:', {
+          email,
+          apiUrl: import.meta.env.VITE_API_URL,
+          fullUrl: `${import.meta.env.VITE_API_URL}/api/users/login`
+        });
       }
-      
-      navigate('/home'); // Changed from '/' to '/home'
+
+      // Test server connection first
+      try {
+        const testResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/health`);
+        const healthData = await testResponse.json();
+        if (debug) {
+          console.log('Health check response:', healthData);
+        }
+        if (!healthData.status === 'ok') {
+          throw new Error('Server health check failed');
+        }
+      } catch (error) {
+        console.error('Health check failed:', error);
+        setErrors({ submit: 'Cannot connect to server. Please try again.' });
+        return;
+      }
+
+      if (debug) {
+        console.log('Attempting login request...');
+      }
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/users/login`,
+        { email, password },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          withCredentials: true,
+          timeout: 5000
+        }
+      );
+
+      if (debug) {
+        console.log('Login response:', {
+          status: response.status,
+          success: response.data.success,
+          hasToken: !!response.data.token,
+          message: response.data.message
+        });
+      }
+
+      console.log('Login response:', {
+        success: response.data.success,
+        hasToken: !!response.data.token,
+        hasUserId: !!response.data.data?._id,
+        message: response.data.message
+      });
+
+      if (response.data.success) {
+        try {
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('userId', response.data.data._id);
+          localStorage.setItem('userEmail', email);
+          
+          if (rememberMe) {
+            localStorage.setItem('rememberedEmail', email);
+          } else {
+            localStorage.removeItem('rememberedEmail');
+          }
+          
+          console.log('Successfully stored auth data in localStorage');
+          navigate('/home');
+        } catch (storageError) {
+          console.error('Failed to store auth data:', storageError);
+          setErrors({ submit: 'Failed to complete login. Please try again.' });
+        }
+      } else {
+        console.warn('Server returned success: false:', response.data);
+        setErrors({ submit: response.data.message || 'Failed to sign in' });
+      }
     } catch (error) {
-      setErrors({ submit: 'Failed to sign in. Please check your credentials.' });
+      console.error('Login error:', {
+        error: error.message,
+        response: error.response,
+        status: error.response?.status,
+        data: error.response?.data
+      });
+
+      // Check for network errors
+      if (!error.response) {
+        setErrors({
+          submit: 'Network error. Please check your connection and try again.'
+        });
+        return;
+      }
+
+      // Handle specific error cases
+      switch (error.response.status) {
+        case 401:
+          setErrors({
+            submit: 'Invalid credentials. Please check your email and password.'
+          });
+          break;
+        case 404:
+          setErrors({
+            submit: 'Server not found. Please try again later.'
+          });
+          break;
+        default:
+          setErrors({
+            submit: error.response?.data?.message || 'Failed to sign in. Please try again.'
+          });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -94,7 +193,7 @@ const Login = () => {
                   type="email"
                   value={email}
                   onChange={(e) => {
-                    setEmail(e.target.value);
+                    setEmail(e.target.value.toLowerCase());
                     if (errors.email) {
                       setErrors({ ...errors, email: '' });
                     }

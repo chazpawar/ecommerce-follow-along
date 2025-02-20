@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const Product = require('../models/Product');
-const fs = require('fs').promises;  // Using promises version for better async handling
+const fs = require('fs').promises;
 const path = require('path');
 const ErrorResponse = require('../utils/errorResponse');
 const { protect } = require('../middleware/auth');
@@ -28,7 +28,7 @@ const upload = multer({
   fileFilter: (req, file, cb) => {
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
     if (!allowedTypes.includes(file.mimetype)) {
-      cb(new Error('Only .jpeg, .png, and .webp formats are allowed'), false);
+      cb(new ErrorResponse('Only .jpeg, .png, and .webp formats are allowed', 400), false);
       return;
     }
     cb(null, true);
@@ -44,55 +44,37 @@ const validateProduct = (req, res, next) => {
   const { name, description, price, category, userEmail } = req.body;
 
   if (!name || !description || !price || !category || !userEmail) {
-    return res.status(400).json({ 
-      success: false,
-      message: 'All fields are required' 
-    });
+    return next(new ErrorResponse('All fields are required', 400));
   }
 
   if (name.length < 3 || name.length > 100) {
-    return res.status(400).json({
-      success: false,
-      message: 'Product name must be between 3 and 100 characters'
-    });
+    return next(new ErrorResponse('Product name must be between 3 and 100 characters', 400));
   }
 
   if (description.length < 10 || description.length > 1000) {
-    return res.status(400).json({
-      success: false,
-      message: 'Description must be between 10 and 1000 characters'
-    });
+    return next(new ErrorResponse('Description must be between 10 and 1000 characters', 400));
   }
 
   const numPrice = parseFloat(price);
   if (isNaN(numPrice) || numPrice < 0) {
-    return res.status(400).json({
-      success: false,
-      message: 'Price must be a valid positive number'
-    });
+    return next(new ErrorResponse('Price must be a valid positive number', 400));
   }
 
   const validCategories = ['bedroom', 'livingroom', 'kitchen', 'bathroom'];
   if (!validCategories.includes(category)) {
-    return res.status(400).json({
-      success: false,
-      message: 'Invalid category'
-    });
+    return next(new ErrorResponse('Invalid category', 400));
   }
 
   next();
 };
 
 // POST endpoint to create a new product
-router.post('/create', protect, upload.array('images', 5), validateProduct, async (req, res) => {
+router.post('/create', protect, upload.array('images', 5), validateProduct, async (req, res, next) => {
   try {
     const { name, description, price, category, userEmail } = req.body;
 
     if (!req.files || req.files.length === 0) {
-      return res.status(400).json({
-        success: false,
-        message: 'At least one product image is required'
-      });
+      return next(new ErrorResponse('At least one product image is required', 400));
     }
 
     const imagePaths = req.files.map(file => `/uploads/${file.filename}`);
@@ -120,17 +102,12 @@ router.post('/create', protect, upload.array('images', 5), validateProduct, asyn
         fs.unlink(file.path).catch(console.error);
       });
     }
-
-    res.status(500).json({
-      success: false,
-      message: 'Failed to create product',
-      error: error.message
-    });
+    next(error);
   }
 });
 
 // PUT endpoint to update a product
-router.put('/update/:id', protect, upload.array('images', 5), validateProduct, async (req, res) => {
+router.put('/update/:id', protect, upload.array('images', 5), validateProduct, async (req, res, next) => {
   try {
     const productId = req.params.id;
     const { name, description, price, category, userEmail } = req.body;
@@ -138,22 +115,16 @@ router.put('/update/:id', protect, upload.array('images', 5), validateProduct, a
     // Check if product exists
     const product = await Product.findById(productId);
     if (!product) {
-      return res.status(404).json({
-        success: false,
-        message: 'Product not found'
-      });
+      return next(new ErrorResponse('Product not found', 404));
     }
 
     // Verify ownership
     if (product.userEmail !== userEmail) {
-      return res.status(403).json({
-        success: false,
-        message: 'Not authorized to update this product'
-      });
+      return next(new ErrorResponse('Not authorized to update this product', 403));
     }
 
     // Handle new images if uploaded
-    let imagePaths = product.images; // Keep existing images by default
+    let imagePaths = product.images;
     if (req.files && req.files.length > 0) {
       // Delete old images
       await Promise.all(product.images.map(async (image) => {
@@ -193,17 +164,12 @@ router.put('/update/:id', protect, upload.array('images', 5), validateProduct, a
         fs.unlink(file.path).catch(console.error);
       });
     }
-
-    res.status(500).json({
-      success: false,
-      message: 'Failed to update product',
-      error: error.message
-    });
+    next(error);
   }
 });
 
 // GET endpoint to fetch all products
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   try {
     const products = await Product.find();
     res.status(200).json({
@@ -212,39 +178,28 @@ router.get('/', async (req, res) => {
       products
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch products',
-      error: error.message
-    });
+    next(error);
   }
 });
 
 // GET endpoint to fetch a single product
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) {
-      return res.status(404).json({
-        success: false,
-        message: 'Product not found'
-      });
+      return next(new ErrorResponse('Product not found', 404));
     }
     res.status(200).json({
       success: true,
       product
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch product',
-      error: error.message
-    });
+    next(error);
   }
 });
 
 // DELETE endpoint to delete a product
-router.delete('/delete/:id', protect, async (req, res) => {
+router.delete('/delete/:id', protect, async (req, res, next) => {
   let imagesToDelete = [];
   
   try {
@@ -252,26 +207,17 @@ router.delete('/delete/:id', protect, async (req, res) => {
     const userEmail = req.body.userEmail;
 
     if (!productId || !userEmail) {
-      return res.status(400).json({
-        success: false,
-        message: 'Product ID and user email are required'
-      });
+      return next(new ErrorResponse('Product ID and user email are required', 400));
     }
 
     const product = await Product.findById(productId);
     
     if (!product) {
-      return res.status(404).json({
-        success: false,
-        message: 'Product not found'
-      });
+      return next(new ErrorResponse('Product not found', 404));
     }
 
     if (product.userEmail !== userEmail) {
-      return res.status(403).json({
-        success: false,
-        message: 'Not authorized to delete this product'
-      });
+      return next(new ErrorResponse('Not authorized to delete this product', 403));
     }
 
     imagesToDelete = product.images ? 
@@ -308,12 +254,7 @@ router.delete('/delete/:id', protect, async (req, res) => {
         );
       });
     }
-
-    res.status(500).json({
-      success: false,
-      message: 'Failed to delete product',
-      error: error.message
-    });
+    next(error);
   }
 });
 

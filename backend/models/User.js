@@ -1,95 +1,67 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+const addressSchema = new mongoose.Schema({
+  street: {
+    type: String,
+    required: [true, 'Street is required']
+  },
+  city: {
+    type: String,
+    required: [true, 'City is required']
+  },
+  state: {
+    type: String,
+    required: [true, 'State is required']
+  },
+  zipCode: {
+    type: String,
+    required: [true, 'ZIP code is required']
+  },
+  country: {
+    type: String,
+    required: [true, 'Country is required']
+  },
+  isDefault: {
+    type: Boolean,
+    default: false
+  }
+});
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Please provide your name'],
-    trim: true,
-    minlength: [2, 'Name must be at least 2 characters long'],
-    maxlength: [50, 'Name cannot be more than 50 characters']
+    required: [true, 'Name is required']
   },
-  cart: [{
-    product: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product',
-      required: true
-    },
-    quantity: {
-      type: Number,
-      required: true,
-      min: [1, 'Quantity must be at least 1']
-    },
-    addedAt: {
-      type: Date,
-      default: Date.now
-    }
-  }],
   email: {
     type: String,
-    required: [true, 'Please provide your email'],
+    required: [true, 'Email is required'],
     unique: true,
     lowercase: true,
     trim: true,
-    match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Please provide a valid email']
+    match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please provide a valid email']
   },
   password: {
     type: String,
-    required: [true, 'Please provide a password'],
+    required: [true, 'Password is required'],
     minlength: [8, 'Password must be at least 8 characters long'],
-    select: false // Don't include password in queries by default
+    select: false
   },
-  profilePicture: {
-    type: String,
-    default: null
-  },
-  addresses: [{
-    street: {
-      type: String,
-      required: [true, 'Street address is required']
-    },
-    city: {
-      type: String,
-      required: [true, 'City is required']
-    },
-    state: {
-      type: String,
-      required: [true, 'State is required']
-    },
-    zipCode: {
-      type: String,
-      required: [true, 'ZIP code is required']
-    },
-    country: {
-      type: String,
-      required: [true, 'Country is required']
-    },
-    isDefault: {
-      type: Boolean,
-      default: false
-    }
-  }],
-  resetPasswordToken: String,
-  resetPasswordExpire: Date,
-  lastLogin: {
+  addresses: [addressSchema],
+  createdAt: {
     type: Date,
-    default: null
+    default: Date.now
   }
-}, {
-  timestamps: true
 });
 
-// Document middleware to handle password encryption
+// Hash password before saving
 userSchema.pre('save', async function(next) {
-  // Only hash the password if it's being modified
   if (!this.isModified('password')) {
     return next();
   }
 
   try {
-    // Generate salt with higher rounds for better security
-    const salt = await bcrypt.genSalt(12);
-    // Hash the password
+    const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
     next();
   } catch (error) {
@@ -97,18 +69,9 @@ userSchema.pre('save', async function(next) {
   }
 });
 
-// Method to compare password for login
+// Compare password method
 userSchema.methods.matchPassword = async function(enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
-};
-
-// Method to get user's public profile
-userSchema.methods.getPublicProfile = function() {
-  const userObject = this.toObject();
-  delete userObject.password;
-  delete userObject.resetPasswordToken;
-  delete userObject.resetPasswordExpire;
-  return userObject;
 };
 
 module.exports = mongoose.model('User', userSchema);
